@@ -1,0 +1,22 @@
+{
+	"name": "ps-pode-snippets",
+	"displayName": "PowerShell Pode Snippets",
+	"description": "PowerShell Snippets for Pode",
+	"version": "0.0.6",
+	"publisher": "Pode",
+	"engines": {
+		"vscode": "^1.28.0"
+	},
+	"categories": [
+		"Snippets"
+	],
+	"contributes": {
+		"snippets": [
+			{
+				"language": "powershell",
+				"path": "./snippets.json"
+			}
+		]
+	},
+	"repository": {}
+}

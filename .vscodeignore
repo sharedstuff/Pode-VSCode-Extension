@@ -1,0 +1,5 @@
+.devcontainer
+*.md
+*.sh
+*.ps1
+*.curated.json

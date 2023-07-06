@@ -1,0 +1,43 @@
+{
+
+	"#Requires -Module (Pode)": {
+		"prefix": "#Requires -Modules @{ ModuleName=\"Pode\"",
+		"body": [
+			"#Requires -Modules @{ ModuleName=\"Pode\"; ModuleVersion=\"${1:2.8.0}\" }",
+			"$0"
+		]
+	},
+
+	"Add-PodeEndpoint Example": {
+		"prefix": "Add-PodeEndpoint",
+		"body": [
+			"Add-PodeEndpoint -Address ${1:localhost} -Port ${2:80} -Protocol ${3:http}",
+			"$0"
+		]
+	},
+
+	"Add-PodeRoute Example": {
+		"prefix": "Add-PodeRoute",
+		"body": [
+			"Add-PodeRoute -Method Get -Path '${1:/}' -ScriptBlock {",
+			"    $2Write-PodeJsonResponse -Value @{ 'value' = 'Hello, world!' }",
+			"}",
+			"$0"
+		]
+	},
+
+	"Start-PodeServer Example": {
+		"prefix": "Start-PodeServer",
+		"body": [
+			"Start-PodeServer {",
+			"    Add-PodeEndpoint -Address ${1:localhost} -Port ${2:80} -Protocol ${3:http}",
+			"",
+			"    Add-PodeRoute -Method Get -Path '${4:/}' -ScriptBlock {",
+			"        $5Write-PodeJsonResponse -Value @{ 'value' = 'Hello, world!' }",
+			"    }",
+			"}",
+			"$0"
+		]
+	}
+
+}

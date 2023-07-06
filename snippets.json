@@ -1,0 +1,2516 @@
+{
+  "#Requires -Module (Pode)": {
+    "prefix": "#Requires -Modules @{ ModuleName=\"Pode\"",
+    "body": [
+      "#Requires -Modules @{ ModuleName=\"Pode\"; ModuleVersion=\"${1:2.8.0}\" }",
+      "$0"
+    ]
+  },
+  "Add-PodeEndpoint Example": {
+    "prefix": "Add-PodeEndpoint",
+    "body": [
+      "Add-PodeEndpoint -Address ${1:localhost} -Port ${2:80} -Protocol ${3:http}",
+      "$0"
+    ]
+  },
+  "Add-PodeRoute Example": {
+    "prefix": "Add-PodeRoute",
+    "body": [
+      "Add-PodeRoute -Method Get -Path '${1:/}' -ScriptBlock {",
+      "    $2Write-PodeJsonResponse -Value @{ 'value' = 'Hello, world!' }",
+      "}",
+      "$0"
+    ]
+  },
+  "Start-PodeServer Example": {
+    "prefix": "Start-PodeServer",
+    "body": [
+      "Start-PodeServer {",
+      "    Add-PodeEndpoint -Address ${1:localhost} -Port ${2:80} -Protocol ${3:http}",
+      "",
+      "    Add-PodeRoute -Method Get -Path '${4:/}' -ScriptBlock {",
+      "        $5Write-PodeJsonResponse -Value @{ 'value' = 'Hello, world!' }",
+      "    }",
+      "}",
+      "$0"
+    ]
+  },
+  "Pode": {
+    "prefix": "Pode",
+    "body": [
+      "Pode -Action ${1:string}"
+    ],
+    "description": "The CLI for Pode, to initialise, build and start your Server."
+  },
+  "Add-PodeAccessRule": {
+    "prefix": "Add-PodeAccessRule",
+    "body": [
+      "Add-PodeAccessRule -Access ${1:string} -Type ${2:string} -Values ${3:string[]}"
+    ],
+    "description": "Adds an access rule to allow or deny IP addresses."
+  },
+  "Add-PodeAuth": {
+    "prefix": "Add-PodeAuth",
+    "body": [
+      "Add-PodeAuth -Name ${1:string} -Scheme ${2:hashtable} -ScriptBlock ${3:scriptblock}"
+    ],
+    "description": "Adds a custom Authentication method for verifying users."
+  },
+  "Add-PodeAuthIIS Groups": {
+    "prefix": "Add-PodeAuthIIS",
+    "body": [
+      "Add-PodeAuthIIS -Name ${1:string}"
+    ],
+    "description": "Adds the inbuilt IIS Authentication method for verifying users passed to Pode from IIS."
+  },
+  "Add-PodeAuthIIS NoGroups": {
+    "prefix": "Add-PodeAuthIIS",
+    "body": [
+      "Add-PodeAuthIIS -Name ${1:string}"
+    ],
+    "description": "Adds the inbuilt IIS Authentication method for verifying users passed to Pode from IIS."
+  },
+  "Add-PodeAuthMiddleware": {
+    "prefix": "Add-PodeAuthMiddleware",
+    "body": [
+      "Add-PodeAuthMiddleware -Name ${1:string} -Authentication ${2:string}"
+    ],
+    "description": "Adds an authentication method as global middleware."
+  },
+  "Add-PodeAuthUserFile Hmac": {
+    "prefix": "Add-PodeAuthUserFile",
+    "body": [
+      "Add-PodeAuthUserFile -Name ${1:string} -Scheme ${2:hashtable}"
+    ],
+    "description": "Adds the inbuilt User File Authentication method for verifying users."
+  },
+  "Add-PodeAuthWindowsAd Groups": {
+    "prefix": "Add-PodeAuthWindowsAd",
+    "body": [
+      "Add-PodeAuthWindowsAd -Name ${1:string} -Scheme ${2:hashtable}"
+    ],
+    "description": "Adds the inbuilt Windows AD Authentication method for verifying users."
+  },
+  "Add-PodeAuthWindowsAd NoGroups": {
+    "prefix": "Add-PodeAuthWindowsAd",
+    "body": [
+      "Add-PodeAuthWindowsAd -Name ${1:string} -Scheme ${2:hashtable}"
+    ],
+    "description": "Adds the inbuilt Windows AD Authentication method for verifying users."
+  },
+  "Add-PodeAuthWindowsLocal Groups": {
+    "prefix": "Add-PodeAuthWindowsLocal",
+    "body": [
+      "Add-PodeAuthWindowsLocal -Name ${1:string} -Scheme ${2:hashtable}"
+    ],
+    "description": "Adds the inbuilt Windows Local User Authentication method for verifying users."
+  },
+  "Add-PodeAuthWindowsLocal NoGroups": {
+    "prefix": "Add-PodeAuthWindowsLocal",
+    "body": [
+      "Add-PodeAuthWindowsLocal -Name ${1:string} -Scheme ${2:hashtable}"
+    ],
+    "description": "Adds the inbuilt Windows Local User Authentication method for verifying users."
+  },
+  "Add-PodeEndpoint Default": {
+    "prefix": "Add-PodeEndpoint",
+    "body": [
+      "Add-PodeEndpoint"
+    ],
+    "description": "Bind an endpoint to listen for incoming Requests. The endpoints can be HTTP, HTTPS, TCP or SMTP, with the option to bind certificates."
+  },
+  "Add-PodeEndpoint CertFile": {
+    "prefix": "Add-PodeEndpoint",
+    "body": [
+      "Add-PodeEndpoint -Certificate ${1:string}"
+    ],
+    "description": "Bind an endpoint to listen for incoming Requests. The endpoints can be HTTP, HTTPS, TCP or SMTP, with the option to bind certificates."
+  },
+  "Add-PodeEndpoint CertThumb": {
+    "prefix": "Add-PodeEndpoint",
+    "body": [
+      "Add-PodeEndpoint -CertificateThumbprint ${1:string}"
+    ],
+    "description": "Bind an endpoint to listen for incoming Requests. The endpoints can be HTTP, HTTPS, TCP or SMTP, with the option to bind certificates."
+  },
+  "Add-PodeEndpoint CertName": {
+    "prefix": "Add-PodeEndpoint",
+    "body": [
+      "Add-PodeEndpoint -CertificateName ${1:string}"
+    ],
+    "description": "Bind an endpoint to listen for incoming Requests. The endpoints can be HTTP, HTTPS, TCP or SMTP, with the option to bind certificates."
+  },
+  "Add-PodeEndpoint CertRaw": {
+    "prefix": "Add-PodeEndpoint",
+    "body": [
+      "Add-PodeEndpoint -X509Certificate ${1:X509Certificate}"
+    ],
+    "description": "Bind an endpoint to listen for incoming Requests. The endpoints can be HTTP, HTTPS, TCP or SMTP, with the option to bind certificates."
+  },
+  "Add-PodeEndpoint CertSelf": {
+    "prefix": "Add-PodeEndpoint",
+    "body": [
+      "Add-PodeEndpoint"
+    ],
+    "description": "Bind an endpoint to listen for incoming Requests. The endpoints can be HTTP, HTTPS, TCP or SMTP, with the option to bind certificates."
+  },
+  "Add-PodeEndware": {
+    "prefix": "Add-PodeEndware",
+    "body": [
+      "Add-PodeEndware -ScriptBlock ${1:scriptblock}"
+    ],
+    "description": "Adds a ScriptBlock as Endware to run at the end of each web Request."
+  },
+  "Add-PodeFileWatcher Script": {
+    "prefix": "Add-PodeFileWatcher",
+    "body": [
+      "Add-PodeFileWatcher -Path ${1:string} -ScriptBlock ${2:scriptblock}"
+    ],
+    "description": "Adds a new File Watcher to monitor file changes in a directory."
+  },
+  "Add-PodeFileWatcher File": {
+    "prefix": "Add-PodeFileWatcher",
+    "body": [
+      "Add-PodeFileWatcher -Path ${1:string} -FilePath ${2:string}"
+    ],
+    "description": "Adds a new File Watcher to monitor file changes in a directory."
+  },
+  "Add-PodeFlashMessage": {
+    "prefix": "Add-PodeFlashMessage",
+    "body": [
+      "Add-PodeFlashMessage -Name ${1:string} -Message ${2:string}"
+    ],
+    "description": "Appends a message to the current flash messages stored in the session for the supplied name.\nThe messages per name are stored as an array."
+  },
+  "Add-PodeHandler Script": {
+    "prefix": "Add-PodeHandler",
+    "body": [
+      "Add-PodeHandler -Type ${1:string} -Name ${2:string} -ScriptBlock ${3:scriptblock}"
+    ],
+    "description": "Adds a Handler of a specific Type."
+  },
+  "Add-PodeHandler File": {
+    "prefix": "Add-PodeHandler",
+    "body": [
+      "Add-PodeHandler -Type ${1:string} -Name ${2:string} -FilePath ${3:string}"
+    ],
+    "description": "Adds a Handler of a specific Type."
+  },
+  "Add-PodeHeader": {
+    "prefix": "Add-PodeHeader",
+    "body": [
+      "Add-PodeHeader -Name ${1:string} -Value ${2:string}"
+    ],
+    "description": "Appends a header against the Response. If the current context is serverless, then this function acts like Set-PodeHeader."
+  },
+  "Add-PodeHeaderBulk": {
+    "prefix": "Add-PodeHeaderBulk",
+    "body": [
+      "Add-PodeHeaderBulk -Values ${1:hashtable}"
+    ],
+    "description": "Appends multiple headers against the Response. If the current context is serverless, then this function acts like Set-PodeHeaderBulk."
+  },
+  "Add-PodeLimitRule": {
+    "prefix": "Add-PodeLimitRule",
+    "body": [
+      "Add-PodeLimitRule -Type ${1:string} -Values ${2:string[]} -Limit ${3:int} -Seconds ${4:int}"
+    ],
+    "description": "Adds rate limiting rules for an IP addresses, Routes, or Endpoints."
+  },
+  "Add-PodeLogger": {
+    "prefix": "Add-PodeLogger",
+    "body": [
+      "Add-PodeLogger -Name ${1:string} -Method ${2:hashtable} -ScriptBlock ${3:scriptblock}"
+    ],
+    "description": "Adds a custom Logging method for parsing custom log items."
+  },
+  "Add-PodeMiddleware Script": {
+    "prefix": "Add-PodeMiddleware",
+    "body": [
+      "Add-PodeMiddleware -Name ${1:string} -ScriptBlock ${2:scriptblock}"
+    ],
+    "description": "Adds a new Middleware to be invoked before every Route, or certain Routes. ScriptBlock should return $true to continue execution, or $false to stop."
+  },
+  "Add-PodeMiddleware Input": {
+    "prefix": "Add-PodeMiddleware",
+    "body": [
+      "Add-PodeMiddleware -Name ${1:string} -InputObject ${2:hashtable}"
+    ],
+    "description": "Adds a new Middleware to be invoked before every Route, or certain Routes. ScriptBlock should return $true to continue execution, or $false to stop."
+  },
+  "Add-PodeOAComponentParameter": {
+    "prefix": "Add-PodeOAComponentParameter",
+    "body": [
+      "Add-PodeOAComponentParameter -Parameter ${1:hashtable}"
+    ],
+    "description": "Adds a reusable component for a request parameter."
+  },
+  "Add-PodeOAComponentRequestBody": {
+    "prefix": "Add-PodeOAComponentRequestBody",
+    "body": [
+      "Add-PodeOAComponentRequestBody -Name ${1:string} -ContentSchemas ${2:hashtable}"
+    ],
+    "description": "Adds a reusable component for a request body."
+  },
+  "Add-PodeOAComponentResponse": {
+    "prefix": "Add-PodeOAComponentResponse",
+    "body": [
+      "Add-PodeOAComponentResponse -Name ${1:string} -Description ${2:string}"
+    ],
+    "description": "Adds a reusable component for responses."
+  },
+  "Add-PodeOAComponentSchema": {
+    "prefix": "Add-PodeOAComponentSchema",
+    "body": [
+      "Add-PodeOAComponentSchema -Name ${1:string} -Schema ${2:hashtable}"
+    ],
+    "description": "Adds a reusable component for a request body."
+  },
+  "Add-PodeOAResponse Schema": {
+    "prefix": "Add-PodeOAResponse",
+    "body": [
+      "Add-PodeOAResponse -Route ${1:hashtable[]} -StatusCode ${2:int}"
+    ],
+    "description": "Adds a response definition to the supplied route."
+  },
+  "Add-PodeOAResponse Reference": {
+    "prefix": "Add-PodeOAResponse",
+    "body": [
+      "Add-PodeOAResponse -Route ${1:hashtable[]} -StatusCode ${2:int} -Reference ${3:string}"
+    ],
+    "description": "Adds a response definition to the supplied route."
+  },
+  "Add-PodePage ScriptBlock": {
+    "prefix": "Add-PodePage",
+    "body": [
+      "Add-PodePage -Name ${1:string} -ScriptBlock ${2:scriptblock}"
+    ],
+    "description": "Helper function to generate simple GET routes from ScritpBlocks, Files, and Views.\nThe output is always rendered as HTML."
+  },
+  "Add-PodePage File": {
+    "prefix": "Add-PodePage",
+    "body": [
+      "Add-PodePage -Name ${1:string} -FilePath ${2:string}"
+    ],
+    "description": "Helper function to generate simple GET routes from ScritpBlocks, Files, and Views.\nThe output is always rendered as HTML."
+  },
+  "Add-PodePage View": {
+    "prefix": "Add-PodePage",
+    "body": [
+      "Add-PodePage -Name ${1:string} -View ${2:string}"
+    ],
+    "description": "Helper function to generate simple GET routes from ScritpBlocks, Files, and Views.\nThe output is always rendered as HTML."
+  },
+  "Add-PodeRoute Script": {
+    "prefix": "Add-PodeRoute",
+    "body": [
+      "Add-PodeRoute -Method ${1:string[]} -Path ${2:string}"
+    ],
+    "description": "Adds a Route for a specific HTTP Method(s), with path, that when called with invoke any logic and/or Middleware."
+  },
+  "Add-PodeRoute File": {
+    "prefix": "Add-PodeRoute",
+    "body": [
+      "Add-PodeRoute -Method ${1:string[]} -Path ${2:string} -FilePath ${3:string}"
+    ],
+    "description": "Adds a Route for a specific HTTP Method(s), with path, that when called with invoke any logic and/or Middleware."
+  },
+  "Add-PodeRouteGroup": {
+    "prefix": "Add-PodeRouteGroup",
+    "body": [
+      "Add-PodeRouteGroup -Routes ${1:scriptblock}"
+    ],
+    "description": "Add a Route Group for sharing values between multiple Routes."
+  },
+  "Add-PodeSchedule Script": {
+    "prefix": "Add-PodeSchedule",
+    "body": [
+      "Add-PodeSchedule -Name ${1:string} -Cron ${2:string[]} -ScriptBlock ${3:scriptblock}"
+    ],
+    "description": "Adds a new Schedule with logic to periodically invoke, defined using Cron Expressions."
+  },
+  "Add-PodeSchedule File": {
+    "prefix": "Add-PodeSchedule",
+    "body": [
+      "Add-PodeSchedule -Name ${1:string} -Cron ${2:string[]} -FilePath ${3:string}"
+    ],
+    "description": "Adds a new Schedule with logic to periodically invoke, defined using Cron Expressions."
+  },
+  "Add-PodeSecurityContentSecurityPolicy": {
+    "prefix": "Add-PodeSecurityContentSecurityPolicy",
+    "body": [
+      "Add-PodeSecurityContentSecurityPolicy"
+    ],
+    "description": "Adds additional values to already defined values for the Content-Security-Policy header, instead of overriding them."
+  },
+  "Add-PodeSecurityHeader": {
+    "prefix": "Add-PodeSecurityHeader",
+    "body": [
+      "Add-PodeSecurityHeader -Name ${1:string}"
+    ],
+    "description": "Add definition for specified security header."
+  },
+  "Add-PodeSecurityPermissionsPolicy": {
+    "prefix": "Add-PodeSecurityPermissionsPolicy",
+    "body": [
+      "Add-PodeSecurityPermissionsPolicy"
+    ],
+    "description": "Adds additional values to already defined values for the Permissions-Policy header, instead of overriding them."
+  },
+  "Add-PodeSignalRoute Script": {
+    "prefix": "Add-PodeSignalRoute",
+    "body": [
+      "Add-PodeSignalRoute -Path ${1:string}"
+    ],
+    "description": "Adds a Signal Route, with path, that when called with invoke any logic."
+  },
+  "Add-PodeSignalRoute File": {
+    "prefix": "Add-PodeSignalRoute",
+    "body": [
+      "Add-PodeSignalRoute -Path ${1:string} -FilePath ${2:string}"
+    ],
+    "description": "Adds a Signal Route, with path, that when called with invoke any logic."
+  },
+  "Add-PodeSignalRouteGroup": {
+    "prefix": "Add-PodeSignalRouteGroup",
+    "body": [
+      "Add-PodeSignalRouteGroup -Routes ${1:scriptblock}"
+    ],
+    "description": "Adds a Signal Route Group for sharing values between multiple WebSockets."
+  },
+  "Add-PodeStaticRoute": {
+    "prefix": "Add-PodeStaticRoute",
+    "body": [
+      "Add-PodeStaticRoute -Path ${1:string} -Source ${2:string}"
+    ],
+    "description": "Add a static Route for rendering static content. You can also define default pages to display."
+  },
+  "Add-PodeStaticRouteGroup": {
+    "prefix": "Add-PodeStaticRouteGroup",
+    "body": [
+      "Add-PodeStaticRouteGroup -Routes ${1:scriptblock}"
+    ],
+    "description": "Add a Static Route Group for sharing values between multiple Static Routes."
+  },
+  "Add-PodeTask Script": {
+    "prefix": "Add-PodeTask",
+    "body": [
+      "Add-PodeTask -Name ${1:string} -ScriptBlock ${2:scriptblock}"
+    ],
+    "description": "Adds a new Task, which can be asynchronously or synchronously invoked."
+  },
+  "Add-PodeTask File": {
+    "prefix": "Add-PodeTask",
+    "body": [
+      "Add-PodeTask -Name ${1:string} -FilePath ${2:string}"
+    ],
+    "description": "Adds a new Task, which can be asynchronously or synchronously invoked."
+  },
+  "Add-PodeTimer Script": {
+    "prefix": "Add-PodeTimer",
+    "body": [
+      "Add-PodeTimer -Name ${1:string} -Interval ${2:int} -ScriptBlock ${3:scriptblock}"
+    ],
+    "description": "Adds a new Timer with logic to periodically invoke, with options to only run a specific number of times."
+  },
+  "Add-PodeTimer File": {
+    "prefix": "Add-PodeTimer",
+    "body": [
+      "Add-PodeTimer -Name ${1:string} -Interval ${2:int} -FilePath ${3:string}"
+    ],
+    "description": "Adds a new Timer with logic to periodically invoke, with options to only run a specific number of times."
+  },
+  "Add-PodeVerb Script": {
+    "prefix": "Add-PodeVerb",
+    "body": [
+      "Add-PodeVerb -Verb ${1:string}"
+    ],
+    "description": "Adds a Verb for a TCP data."
+  },
+  "Add-PodeVerb File": {
+    "prefix": "Add-PodeVerb",
+    "body": [
+      "Add-PodeVerb -Verb ${1:string} -FilePath ${2:string}"
+    ],
+    "description": "Adds a Verb for a TCP data."
+  },
+  "Add-PodeViewFolder": {
+    "prefix": "Add-PodeViewFolder",
+    "body": [
+      "Add-PodeViewFolder -Name ${1:string} -Source ${2:string}"
+    ],
+    "description": "Add a custom path that contains additional views."
+  },
+  "Clear-PodeAuth": {
+    "prefix": "Clear-PodeAuth",
+    "body": [
+      "Clear-PodeAuth"
+    ],
+    "description": "Clear all defined Authentication methods."
+  },
+  "Clear-PodeEvent": {
+    "prefix": "Clear-PodeEvent",
+    "body": [
+      "Clear-PodeEvent -Type ${1:string}"
+    ],
+    "description": "Clears an event of all registered scripts."
+  },
+  "Clear-PodeFileWatchers": {
+    "prefix": "Clear-PodeFileWatchers",
+    "body": [
+      "Clear-PodeFileWatchers"
+    ],
+    "description": "Removes all File Watchers."
+  },
+  "Clear-PodeFlashMessages": {
+    "prefix": "Clear-PodeFlashMessages",
+    "body": [
+      "Clear-PodeFlashMessages"
+    ],
+    "description": "Clears all of the flash messages currently stored in the session."
+  },
+  "Clear-PodeHandlers": {
+    "prefix": "Clear-PodeHandlers",
+    "body": [
+      "Clear-PodeHandlers"
+    ],
+    "description": "Removes all added Handlers, or Handlers of a specific Type."
+  },
+  "Clear-PodeLockables": {
+    "prefix": "Clear-PodeLockables",
+    "body": [
+      "Clear-PodeLockables"
+    ],
+    "description": "Remove all Lockables."
+  },
+  "Clear-PodeLoggers": {
+    "prefix": "Clear-PodeLoggers",
+    "body": [
+      "Clear-PodeLoggers"
+    ],
+    "description": "Clears all Logging methods that have been configured."
+  },
+  "Clear-PodeMiddleware": {
+    "prefix": "Clear-PodeMiddleware",
+    "body": [
+      "Clear-PodeMiddleware"
+    ],
+    "description": "Removes all user defined Middleware."
+  },
+  "Clear-PodeMutexes": {
+    "prefix": "Clear-PodeMutexes",
+    "body": [
+      "Clear-PodeMutexes"
+    ],
+    "description": "Removes all Mutexes."
+  },
+  "Clear-PodeRoutes": {
+    "prefix": "Clear-PodeRoutes",
+    "body": [
+      "Clear-PodeRoutes"
+    ],
+    "description": "Removes all added Routes, or Routes for a specific Method."
+  },
+  "Clear-PodeSemaphores": {
+    "prefix": "Clear-PodeSemaphores",
+    "body": [
+      "Clear-PodeSemaphores"
+    ],
+    "description": "Removes all Semaphores."
+  },
+  "Clear-PodeSignalRoutes": {
+    "prefix": "Clear-PodeSignalRoutes",
+    "body": [
+      "Clear-PodeSignalRoutes"
+    ],
+    "description": "Removes all added Signal Routes."
+  },
+  "Clear-PodeStaticRoutes": {
+    "prefix": "Clear-PodeStaticRoutes",
+    "body": [
+      "Clear-PodeStaticRoutes"
+    ],
+    "description": "Removes all added static Routes."
+  },
+  "Clear-PodeTasks": {
+    "prefix": "Clear-PodeTasks",
+    "body": [
+      "Clear-PodeTasks"
+    ],
+    "description": "Removes all Tasks."
+  },
+  "Clear-PodeTimers": {
+    "prefix": "Clear-PodeTimers",
+    "body": [
+      "Clear-PodeTimers"
+    ],
+    "description": "Removes all Timers."
+  },
+  "Clear-PodeVerbs": {
+    "prefix": "Clear-PodeVerbs",
+    "body": [
+      "Clear-PodeVerbs"
+    ],
+    "description": "Removes all added Verbs."
+  },
+  "Close-PodeDisposable": {
+    "prefix": "Close-PodeDisposable",
+    "body": [
+      "Close-PodeDisposable"
+    ],
+    "description": "Dispose and close streams, tokens, and other Disposables."
+  },
+  "Close-PodeServer": {
+    "prefix": "Close-PodeServer",
+    "body": [
+      "Close-PodeServer"
+    ],
+    "description": "Closes the Pode server."
+  },
+  "Close-PodeTask": {
+    "prefix": "Close-PodeTask",
+    "body": [
+      "Close-PodeTask -Task ${1:hashtable}"
+    ],
+    "description": "Close and dispose of a Task, even if still running."
+  },
+  "Close-PodeTcpClient": {
+    "prefix": "Close-PodeTcpClient",
+    "body": [
+      "Close-PodeTcpClient"
+    ],
+    "description": "Close an open TCP client connection"
+  },
+  "Connect-PodeWebSocket Script": {
+    "prefix": "Connect-PodeWebSocket",
+    "body": [
+      "Connect-PodeWebSocket -Name ${1:string} -Url ${2:string}"
+    ],
+    "description": "Connect to an external WebSocket."
+  },
+  "Connect-PodeWebSocket File": {
+    "prefix": "Connect-PodeWebSocket",
+    "body": [
+      "Connect-PodeWebSocket -Name ${1:string} -Url ${2:string} -FilePath ${3:string}"
+    ],
+    "description": "Connect to an external WebSocket."
+  },
+  "ConvertFrom-PodeJwt Secret": {
+    "prefix": "ConvertFrom-PodeJwt",
+    "body": [
+      "ConvertFrom-PodeJwt -Token ${1:string}"
+    ],
+    "description": "Convert and return the payload of a JWT token, verifying the signature by default with support to ignore the signature."
+  },
+  "ConvertFrom-PodeJwt Signed": {
+    "prefix": "ConvertFrom-PodeJwt",
+    "body": [
+      "ConvertFrom-PodeJwt -Token ${1:string}"
+    ],
+    "description": "Convert and return the payload of a JWT token, verifying the signature by default with support to ignore the signature."
+  },
+  "ConvertFrom-PodeJwt Ignore": {
+    "prefix": "ConvertFrom-PodeJwt",
+    "body": [
+      "ConvertFrom-PodeJwt -Token ${1:string}"
+    ],
+    "description": "Convert and return the payload of a JWT token, verifying the signature by default with support to ignore the signature."
+  },
+  "ConvertFrom-PodeOIDCDiscovery": {
+    "prefix": "ConvertFrom-PodeOIDCDiscovery",
+    "body": [
+      "ConvertFrom-PodeOIDCDiscovery -Url ${1:string} -ClientId ${2:string}"
+    ],
+    "description": "Builds an OAuth2 scheme using an OpenID Connect Discovery URL."
+  },
+  "ConvertTo-PodeJwt": {
+    "prefix": "ConvertTo-PodeJwt",
+    "body": [
+      "ConvertTo-PodeJwt -Header ${1:hashtable} -Payload ${2:hashtable}"
+    ],
+    "description": "Convert a Header/Payload hashtable into a JWT, with the option to sign it."
+  },
+  "ConvertTo-PodeOAParameter Reference": {
+    "prefix": "ConvertTo-PodeOAParameter",
+    "body": [
+      "ConvertTo-PodeOAParameter -Reference ${1:string}"
+    ],
+    "description": "Converts an OpenAPI property (such as from New-PodeOAIntProperty) into a Request Parameter."
+  },
+  "ConvertTo-PodeOAParameter Schema": {
+    "prefix": "ConvertTo-PodeOAParameter",
+    "body": [
+      "ConvertTo-PodeOAParameter -In ${1:string} -Property ${2:hashtable}"
+    ],
+    "description": "Converts an OpenAPI property (such as from New-PodeOAIntProperty) into a Request Parameter."
+  },
+  "ConvertTo-PodeRoute": {
+    "prefix": "ConvertTo-PodeRoute",
+    "body": [
+      "ConvertTo-PodeRoute"
+    ],
+    "description": "Takes an array of Commands (Functions/Aliases), or a Module, and generates appropriate Routes for the commands."
+  },
+  "Disable-PodeErrorLogging": {
+    "prefix": "Disable-PodeErrorLogging",
+    "body": [
+      "Disable-PodeErrorLogging"
+    ],
+    "description": "Disables Error Logging."
+  },
+  "Disable-PodeRequestLogging": {
+    "prefix": "Disable-PodeRequestLogging",
+    "body": [
+      "Disable-PodeRequestLogging"
+    ],
+    "description": "Disables Request Logging."
+  },
+  "Disconnect-PodeWebSocket": {
+    "prefix": "Disconnect-PodeWebSocket",
+    "body": [
+      "Disconnect-PodeWebSocket"
+    ],
+    "description": "Disconnect from a WebSocket connection. These connections can be reconnected later using Reset-PodeWebSocket"
+  },
+  "Dismount-PodeSecret": {
+    "prefix": "Dismount-PodeSecret",
+    "body": [
+      "Dismount-PodeSecret -Name ${1:string}"
+    ],
+    "description": "Dismount a previously mounted Secret."
+  },
+  "Edit-PodeSchedule": {
+    "prefix": "Edit-PodeSchedule",
+    "body": [
+      "Edit-PodeSchedule -Name ${1:string}"
+    ],
+    "description": "Edits an existing Schedule's properties, such an cron expressions or scriptblock."
+  },
+  "Edit-PodeTask": {
+    "prefix": "Edit-PodeTask",
+    "body": [
+      "Edit-PodeTask -Name ${1:string}"
+    ],
+    "description": "Edits an existing Task's properties, such as scriptblock."
+  },
+  "Edit-PodeTimer": {
+    "prefix": "Edit-PodeTimer",
+    "body": [
+      "Edit-PodeTimer -Name ${1:string}"
+    ],
+    "description": "Edits an existing Timer's properties, such as interval or scriptblock."
+  },
+  "Enable-PodeCsrfMiddleware Cookies": {
+    "prefix": "Enable-PodeCsrfMiddleware",
+    "body": [
+      "Enable-PodeCsrfMiddleware"
+    ],
+    "description": "Enables Middleware for verifying CSRF tokens on Requests, with configurable HTTP methods to ignore verification."
+  },
+  "Enable-PodeErrorLogging": {
+    "prefix": "Enable-PodeErrorLogging",
+    "body": [
+      "Enable-PodeErrorLogging -Method ${1:hashtable}"
+    ],
+    "description": "Enables Error Logging using a supplied output method."
+  },
+  "Enable-PodeOpenApi": {
+    "prefix": "Enable-PodeOpenApi",
+    "body": [
+      "Enable-PodeOpenApi -Title ${1:string}"
+    ],
+    "description": "Enables the OpenAPI default route in Pode, as well as setting up details like Title and API Version."
+  },
+  "Enable-PodeOpenApiViewer": {
+    "prefix": "Enable-PodeOpenApiViewer",
+    "body": [
+      "Enable-PodeOpenApiViewer -Type ${1:string}"
+    ],
+    "description": "Adds a route that enables a viewer to display OpenAPI docs, such as Swagger or ReDoc."
+  },
+  "Enable-PodeRequestLogging": {
+    "prefix": "Enable-PodeRequestLogging",
+    "body": [
+      "Enable-PodeRequestLogging -Method ${1:hashtable}"
+    ],
+    "description": "Enables Request Logging using a supplied output method."
+  },
+  "Enable-PodeSessionMiddleware Cookies": {
+    "prefix": "Enable-PodeSessionMiddleware",
+    "body": [
+      "Enable-PodeSessionMiddleware"
+    ],
+    "description": "Enables Middleware for creating, retrieving and using Sessions within Pode; with support for defining Session duration, and custom Storage.\nIf you're storing sessions outside of Pode, you must supply a Secret value so sessions aren't corrupted."
+  },
+  "Enable-PodeSessionMiddleware Headers": {
+    "prefix": "Enable-PodeSessionMiddleware",
+    "body": [
+      "Enable-PodeSessionMiddleware"
+    ],
+    "description": "Enables Middleware for creating, retrieving and using Sessions within Pode; with support for defining Session duration, and custom Storage.\nIf you're storing sessions outside of Pode, you must supply a Secret value so sessions aren't corrupted."
+  },
+  "Enter-PodeLockable Object": {
+    "prefix": "Enter-PodeLockable",
+    "body": [
+      "Enter-PodeLockable"
+    ],
+    "description": "Place a lock on an object or Lockable. This should eventually be followed by a call to Exit-PodeLockable."
+  },
+  "Enter-PodeLockable Name": {
+    "prefix": "Enter-PodeLockable",
+    "body": [
+      "Enter-PodeLockable -Name ${1:string}"
+    ],
+    "description": "Place a lock on an object or Lockable. This should eventually be followed by a call to Exit-PodeLockable."
+  },
+  "Enter-PodeMutex": {
+    "prefix": "Enter-PodeMutex",
+    "body": [
+      "Enter-PodeMutex -Name ${1:string}"
+    ],
+    "description": "Acquires a hold on a Mutex. This should eventually by followed by a call to Exit-PodeMutex."
+  },
+  "Enter-PodeSemaphore": {
+    "prefix": "Enter-PodeSemaphore",
+    "body": [
+      "Enter-PodeSemaphore -Name ${1:string}"
+    ],
+    "description": "Acquires a hold on a Semaphore. This should eventually by followed by a call to Exit-PodeSemaphore."
+  },
+  "Exit-PodeLockable Object": {
+    "prefix": "Exit-PodeLockable",
+    "body": [
+      "Exit-PodeLockable"
+    ],
+    "description": "Remove a lock from an object or Lockable, that was originally locked via Enter-PodeLockable."
+  },
+  "Exit-PodeLockable Name": {
+    "prefix": "Exit-PodeLockable",
+    "body": [
+      "Exit-PodeLockable -Name ${1:string}"
+    ],
+    "description": "Remove a lock from an object or Lockable, that was originally locked via Enter-PodeLockable."
+  },
+  "Exit-PodeMutex": {
+    "prefix": "Exit-PodeMutex",
+    "body": [
+      "Exit-PodeMutex -Name ${1:string}"
+    ],
+    "description": "Release the hold on a Mutex, that was originally acquired by Enter-PodeMutex."
+  },
+  "Exit-PodeSemaphore": {
+    "prefix": "Exit-PodeSemaphore",
+    "body": [
+      "Exit-PodeSemaphore -Name ${1:string}"
+    ],
+    "description": "Release the hold on a Semaphore, that was originally acquired by Enter-PodeSemaphore."
+  },
+  "Export-PodeFunction": {
+    "prefix": "Export-PodeFunction",
+    "body": [
+      "Export-PodeFunction -Name ${1:string[]}"
+    ],
+    "description": "Exports functions that can be auto-imported by Pode, and into its runspaces."
+  },
+  "Export-PodeModule": {
+    "prefix": "Export-PodeModule",
+    "body": [
+      "Export-PodeModule -Name ${1:string[]}"
+    ],
+    "description": "Exports modules that can be auto-imported by Pode, and into its runspaces."
+  },
+  "Export-PodeSecretVault": {
+    "prefix": "Export-PodeSecretVault",
+    "body": [
+      "Export-PodeSecretVault -Name ${1:string[]}"
+    ],
+    "description": "Exports Secret Vaults that can be auto-imported by Pode, and into its runspaces."
+  },
+  "Export-PodeSnapin": {
+    "prefix": "Export-PodeSnapin",
+    "body": [
+      "Export-PodeSnapin -Name ${1:string[]}"
+    ],
+    "description": "Exports snapins that can be auto-imported by Pode, and into its runspaces."
+  },
+  "Get-PodeAuth": {
+    "prefix": "Get-PodeAuth",
+    "body": [
+      "Get-PodeAuth -Name ${1:string}"
+    ],
+    "description": "Gets an Authentication method."
+  },
+  "Get-PodeConfig": {
+    "prefix": "Get-PodeConfig",
+    "body": [
+      "Get-PodeConfig"
+    ],
+    "description": "Returns the loaded configuration of the server."
+  },
+  "Get-PodeCookie": {
+    "prefix": "Get-PodeCookie",
+    "body": [
+      "Get-PodeCookie -Name ${1:string}"
+    ],
+    "description": "Retrieves a cookie from the Request, with the option to supply a secret to unsign the cookie's value."
+  },
+  "Get-PodeCookieSecret General": {
+    "prefix": "Get-PodeCookieSecret",
+    "body": [
+      "Get-PodeCookieSecret -Name ${1:string}"
+    ],
+    "description": "Retrieves a stored secret value."
+  },
+  "Get-PodeCookieSecret Global": {
+    "prefix": "Get-PodeCookieSecret",
+    "body": [
+      "Get-PodeCookieSecret"
+    ],
+    "description": "Retrieves a stored secret value."
+  },
+  "Get-PodeCookieValue": {
+    "prefix": "Get-PodeCookieValue",
+    "body": [
+      "Get-PodeCookieValue -Name ${1:string}"
+    ],
+    "description": "Retrieves the value of a cookie from the Request, with the option to supply a secret to unsign the cookie's value."
+  },
+  "Get-PodeCsrfMiddleware": {
+    "prefix": "Get-PodeCsrfMiddleware",
+    "body": [
+      "Get-PodeCsrfMiddleware"
+    ],
+    "description": "Returns adhoc CSRF CSRF verification Middleware, for use on Routes."
+  },
+  "Get-PodeEndpoint": {
+    "prefix": "Get-PodeEndpoint",
+    "body": [
+      "Get-PodeEndpoint"
+    ],
+    "description": "Get an Endpoint(s)."
+  },
+  "Get-PodeEvent": {
+    "prefix": "Get-PodeEvent",
+    "body": [
+      "Get-PodeEvent -Type ${1:string} -Name ${2:string}"
+    ],
+    "description": "Retrieves an event."
+  },
+  "Get-PodeFileWatcher": {
+    "prefix": "Get-PodeFileWatcher",
+    "body": [
+      "Get-PodeFileWatcher"
+    ],
+    "description": "Returns any defined File Watchers."
+  },
+  "Get-PodeFlashMessage": {
+    "prefix": "Get-PodeFlashMessage",
+    "body": [
+      "Get-PodeFlashMessage -Name ${1:string}"
+    ],
+    "description": "Returns all of the flash messages, as an array, currently stored for the name within the session.\nOnce retrieved, the messages are removed from storage."
+  },
+  "Get-PodeFlashMessageNames": {
+    "prefix": "Get-PodeFlashMessageNames",
+    "body": [
+      "Get-PodeFlashMessageNames"
+    ],
+    "description": "Returns all of the names for each of the messages currently being stored. This does not clear the messages."
+  },
+  "Get-PodeHeader": {
+    "prefix": "Get-PodeHeader",
+    "body": [
+      "Get-PodeHeader -Name ${1:string}"
+    ],
+    "description": "Retrieves the value of a header from the Request."
+  },
+  "Get-PodeIISApplicationPath": {
+    "prefix": "Get-PodeIISApplicationPath",
+    "body": [
+      "Get-PodeIISApplicationPath"
+    ],
+    "description": "Returns the IIS application path, or null if not using IIS."
+  },
+  "Get-PodeLockable": {
+    "prefix": "Get-PodeLockable",
+    "body": [
+      "Get-PodeLockable -Name ${1:string}"
+    ],
+    "description": "Get a custom Lockable object for use with Lock-PodeObject, and Enter/Exit-PodeLockable."
+  },
+  "Get-PodeMutex": {
+    "prefix": "Get-PodeMutex",
+    "body": [
+      "Get-PodeMutex -Name ${1:string}"
+    ],
+    "description": "Get a Mutex."
+  },
+  "Get-PodeOpenApiDefinition": {
+    "prefix": "Get-PodeOpenApiDefinition",
+    "body": [
+      "Get-PodeOpenApiDefinition"
+    ],
+    "description": "Gets the OpenAPI definition for custom use in routes, or other functions."
+  },
+  "Get-PodeRoute": {
+    "prefix": "Get-PodeRoute",
+    "body": [
+      "Get-PodeRoute"
+    ],
+    "description": "Get a Route(s)."
+  },
+  "Get-PodeSchedule": {
+    "prefix": "Get-PodeSchedule",
+    "body": [
+      "Get-PodeSchedule"
+    ],
+    "description": "Returns any defined schedules, with support for filtering."
+  },
+  "Get-PodeScheduleNextTrigger": {
+    "prefix": "Get-PodeScheduleNextTrigger",
+    "body": [
+      "Get-PodeScheduleNextTrigger -Name ${1:string}"
+    ],
+    "description": "Get the next trigger time for a Schedule, either from the Schedule's StartTime or from a defined DateTime."
+  },
+  "Get-PodeSecret": {
+    "prefix": "Get-PodeSecret",
+    "body": [
+      "Get-PodeSecret -Name ${1:string}"
+    ],
+    "description": "Retrieve the value of a mounted Secret from a Secret Vault. You can also use \"$value = $secret:<NAME>\" syntax in certain places."
+  },
+  "Get-PodeSecretVault": {
+    "prefix": "Get-PodeSecretVault",
+    "body": [
+      "Get-PodeSecretVault -Name ${1:string[]}"
+    ],
+    "description": "Fetches and returns information of a Secret Vault."
+  },
+  "Get-PodeSemaphore": {
+    "prefix": "Get-PodeSemaphore",
+    "body": [
+      "Get-PodeSemaphore -Name ${1:string}"
+    ],
+    "description": "Get a Semaphore."
+  },
+  "Get-PodeServerActiveRequestMetric": {
+    "prefix": "Get-PodeServerActiveRequestMetric",
+    "body": [
+      "Get-PodeServerActiveRequestMetric"
+    ],
+    "description": "Returns the count of all, processing, or queued active requests."
+  },
+  "Get-PodeServerActiveSignalMetric": {
+    "prefix": "Get-PodeServerActiveSignalMetric",
+    "body": [
+      "Get-PodeServerActiveSignalMetric"
+    ],
+    "description": "Returns the count of all, processing, or queued active signals; for either server or client signals."
+  },
+  "Get-PodeServerPath": {
+    "prefix": "Get-PodeServerPath",
+    "body": [
+      "Get-PodeServerPath"
+    ],
+    "description": "Returns the literal path of the server."
+  },
+  "Get-PodeServerRequestMetric StatusCode": {
+    "prefix": "Get-PodeServerRequestMetric",
+    "body": [
+      "Get-PodeServerRequestMetric"
+    ],
+    "description": "Returns the total number of requests/per status code the Server has receieved."
+  },
+  "Get-PodeServerRequestMetric Total": {
+    "prefix": "Get-PodeServerRequestMetric",
+    "body": [
+      "Get-PodeServerRequestMetric"
+    ],
+    "description": "Returns the total number of requests/per status code the Server has receieved."
+  },
+  "Get-PodeServerRestartCount": {
+    "prefix": "Get-PodeServerRestartCount",
+    "body": [
+      "Get-PodeServerRestartCount"
+    ],
+    "description": "Returns the number of times the server has restarted."
+  },
+  "Get-PodeServerSignalMetric": {
+    "prefix": "Get-PodeServerSignalMetric",
+    "body": [
+      "Get-PodeServerSignalMetric"
+    ],
+    "description": "Returns the total number of Signal requests the Server has receieved."
+  },
+  "Get-PodeServerUptime": {
+    "prefix": "Get-PodeServerUptime",
+    "body": [
+      "Get-PodeServerUptime"
+    ],
+    "description": "Returns the uptime of the server in milliseconds. You can optionally return the total uptime regardless of server restarts."
+  },
+  "Get-PodeSessionDuration": {
+    "prefix": "Get-PodeSessionDuration",
+    "body": [
+      "Get-PodeSessionDuration"
+    ],
+    "description": "Returns the defined Session duration that all Session are created using."
+  },
+  "Get-PodeSessionExpiry": {
+    "prefix": "Get-PodeSessionExpiry",
+    "body": [
+      "Get-PodeSessionExpiry"
+    ],
+    "description": "Returns the datetime on which the current Session's will expire."
+  },
+  "Get-PodeSessionId": {
+    "prefix": "Get-PodeSessionId",
+    "body": [
+      "Get-PodeSessionId"
+    ],
+    "description": "Returns the currently authenticated SessionId. If there's no session, or it's not authenticated, then null is returned instead.\nYou can also have the SessionId returned as signed as well."
+  },
+  "Get-PodeSignalRoute": {
+    "prefix": "Get-PodeSignalRoute",
+    "body": [
+      "Get-PodeSignalRoute"
+    ],
+    "description": "Get a Signal Route(s)."
+  },
+  "Get-PodeState": {
+    "prefix": "Get-PodeState",
+    "body": [
+      "Get-PodeState -Name ${1:string}"
+    ],
+    "description": "Retrieves some state object from the shared state."
+  },
+  "Get-PodeStateNames": {
+    "prefix": "Get-PodeStateNames",
+    "body": [
+      "Get-PodeStateNames"
+    ],
+    "description": "Returns the current names of state variables that have been set. You can filter the result using Scope or a Pattern."
+  },
+  "Get-PodeStaticRoute": {
+    "prefix": "Get-PodeStaticRoute",
+    "body": [
+      "Get-PodeStaticRoute"
+    ],
+    "description": "Get a static Route(s)."
+  },
+  "Get-PodeTask": {
+    "prefix": "Get-PodeTask",
+    "body": [
+      "Get-PodeTask"
+    ],
+    "description": "Returns any defined Tasks, with support for filtering."
+  },
+  "Get-PodeTimer": {
+    "prefix": "Get-PodeTimer",
+    "body": [
+      "Get-PodeTimer"
+    ],
+    "description": "Returns any defined timers, with support for filtering."
+  },
+  "Get-PodeVerb": {
+    "prefix": "Get-PodeVerb",
+    "body": [
+      "Get-PodeVerb"
+    ],
+    "description": "Get a Verb(s)."
+  },
+  "Import-PodeModule Name": {
+    "prefix": "Import-PodeModule",
+    "body": [
+      "Import-PodeModule -Name ${1:string}"
+    ],
+    "description": "Imports a Module into the current, and all runspaces that Pode uses. Modules can also be imported from the ps_modules directory."
+  },
+  "Import-PodeModule Path": {
+    "prefix": "Import-PodeModule",
+    "body": [
+      "Import-PodeModule -Path ${1:string}"
+    ],
+    "description": "Imports a Module into the current, and all runspaces that Pode uses. Modules can also be imported from the ps_modules directory."
+  },
+  "Import-PodeSnapin": {
+    "prefix": "Import-PodeSnapin",
+    "body": [
+      "Import-PodeSnapin -Name ${1:string}"
+    ],
+    "description": "Imports a Snapin into the current, and all runspaces that Pode uses."
+  },
+  "Initialize-PodeCsrf": {
+    "prefix": "Initialize-PodeCsrf",
+    "body": [
+      "Initialize-PodeCsrf"
+    ],
+    "description": "Initialises CSRF within Pode for adhoc usage, with configurable HTTP methods to ignore verification."
+  },
+  "Invoke-PodeSchedule": {
+    "prefix": "Invoke-PodeSchedule",
+    "body": [
+      "Invoke-PodeSchedule -Name ${1:string}"
+    ],
+    "description": "Adhoc invoke a Schedule's logic outside of its defined cron-expression. This invocation doesn't count towards the Schedule's limit."
+  },
+  "Invoke-PodeScriptBlock": {
+    "prefix": "Invoke-PodeScriptBlock",
+    "body": [
+      "Invoke-PodeScriptBlock -ScriptBlock ${1:scriptblock}"
+    ],
+    "description": "Invokes a ScriptBlock, supplying optional arguments, splatting, and returning any optional values."
+  },
+  "Invoke-PodeTask": {
+    "prefix": "Invoke-PodeTask",
+    "body": [
+      "Invoke-PodeTask -Name ${1:string}"
+    ],
+    "description": "Invoke a Task either asynchronously or synchronously, with support for returning values."
+  },
+  "Invoke-PodeTimer": {
+    "prefix": "Invoke-PodeTimer",
+    "body": [
+      "Invoke-PodeTimer -Name ${1:string}"
+    ],
+    "description": "Adhoc invoke a Timer's logic outside of its defined interval. This invocation doesn't count towards the Timer's limit."
+  },
+  "Lock-PodeObject Object": {
+    "prefix": "Lock-PodeObject",
+    "body": [
+      "Lock-PodeObject -ScriptBlock ${1:scriptblock}"
+    ],
+    "description": "Places a temporary lock on an object, or Lockable, while a ScriptBlock is invoked."
+  },
+  "Lock-PodeObject Name": {
+    "prefix": "Lock-PodeObject",
+    "body": [
+      "Lock-PodeObject -Name ${1:string} -ScriptBlock ${2:scriptblock}"
+    ],
+    "description": "Places a temporary lock on an object, or Lockable, while a ScriptBlock is invoked."
+  },
+  "Mount-PodeSecret": {
+    "prefix": "Mount-PodeSecret",
+    "body": [
+      "Mount-PodeSecret -Name ${1:string} -Vault ${2:string} -Key ${3:string}"
+    ],
+    "description": "Mount a Secret from a Secret Vault, so it can be more easily referenced and support caching."
+  },
+  "Move-PodeResponseUrl Url": {
+    "prefix": "Move-PodeResponseUrl",
+    "body": [
+      "Move-PodeResponseUrl -Url ${1:string}"
+    ],
+    "description": "Redirecting a user to a new URL, or the same URL as the Request but a different Protocol - or other components."
+  },
+  "Move-PodeResponseUrl Endpoint": {
+    "prefix": "Move-PodeResponseUrl",
+    "body": [
+      "Move-PodeResponseUrl"
+    ],
+    "description": "Redirecting a user to a new URL, or the same URL as the Request but a different Protocol - or other components."
+  },
+  "Move-PodeResponseUrl Components": {
+    "prefix": "Move-PodeResponseUrl",
+    "body": [
+      "Move-PodeResponseUrl"
+    ],
+    "description": "Redirecting a user to a new URL, or the same URL as the Request but a different Protocol - or other components."
+  },
+  "New-PodeAuthAzureADScheme": {
+    "prefix": "New-PodeAuthAzureADScheme",
+    "body": [
+      "New-PodeAuthAzureADScheme -ClientId ${1:string}"
+    ],
+    "description": "A wrapper for New-PodeAuthScheme and OAuth2, which builds an OAuth2 scheme for Azure AD."
+  },
+  "New-PodeAuthScheme Basic": {
+    "prefix": "New-PodeAuthScheme",
+    "body": [
+      "New-PodeAuthScheme"
+    ],
+    "description": "Create a new type of Authentication, which is used to parse the Request for user credentials for validating."
+  },
+  "New-PodeAuthScheme Digest": {
+    "prefix": "New-PodeAuthScheme",
+    "body": [
+      "New-PodeAuthScheme"
+    ],
+    "description": "Create a new type of Authentication, which is used to parse the Request for user credentials for validating."
+  },
+  "New-PodeAuthScheme Bearer": {
+    "prefix": "New-PodeAuthScheme",
+    "body": [
+      "New-PodeAuthScheme"
+    ],
+    "description": "Create a new type of Authentication, which is used to parse the Request for user credentials for validating."
+  },
+  "New-PodeAuthScheme Form": {
+    "prefix": "New-PodeAuthScheme",
+    "body": [
+      "New-PodeAuthScheme"
+    ],
+    "description": "Create a new type of Authentication, which is used to parse the Request for user credentials for validating."
+  },
+  "New-PodeAuthScheme Custom": {
+    "prefix": "New-PodeAuthScheme",
+    "body": [
+      "New-PodeAuthScheme -ScriptBlock ${1:scriptblock}"
+    ],
+    "description": "Create a new type of Authentication, which is used to parse the Request for user credentials for validating."
+  },
+  "New-PodeAuthScheme ClientCertificate": {
+    "prefix": "New-PodeAuthScheme",
+    "body": [
+      "New-PodeAuthScheme"
+    ],
+    "description": "Create a new type of Authentication, which is used to parse the Request for user credentials for validating."
+  },
+  "New-PodeAuthScheme OAuth2": {
+    "prefix": "New-PodeAuthScheme",
+    "body": [
+      "New-PodeAuthScheme -ClientId ${1:string} -TokenUrl ${2:string}"
+    ],
+    "description": "Create a new type of Authentication, which is used to parse the Request for user credentials for validating."
+  },
+  "New-PodeAuthScheme ApiKey": {
+    "prefix": "New-PodeAuthScheme",
+    "body": [
+      "New-PodeAuthScheme"
+    ],
+    "description": "Create a new type of Authentication, which is used to parse the Request for user credentials for validating."
+  },
+  "New-PodeAuthTwitterScheme": {
+    "prefix": "New-PodeAuthTwitterScheme",
+    "body": [
+      "New-PodeAuthTwitterScheme -ClientId ${1:string}"
+    ],
+    "description": "A wrapper for New-PodeAuthScheme and OAuth2, which builds an OAuth2 scheme for Twitter apps."
+  },
+  "New-PodeCron": {
+    "prefix": "New-PodeCron",
+    "body": [
+      "New-PodeCron"
+    ],
+    "description": "A helper function to generate cron expressions, which can be used for Schedules and other functions that use cron expressions.\nThis helper function only covers simple cron use-cases, with some advanced use-cases. If you need further advanced cron\nexpressions it would be best to write the expression by hand."
+  },
+  "New-PodeCsrfToken": {
+    "prefix": "New-PodeCsrfToken",
+    "body": [
+      "New-PodeCsrfToken"
+    ],
+    "description": "Creates and returns a new secure token for use with CSRF."
+  },
+  "New-PodeLockable": {
+    "prefix": "New-PodeLockable",
+    "body": [
+      "New-PodeLockable -Name ${1:string}"
+    ],
+    "description": "Creates a new custom Lockable object for use with Lock-PodeObject, and Enter/Exit-PodeLockable."
+  },
+  "New-PodeLoggingMethod Terminal": {
+    "prefix": "New-PodeLoggingMethod",
+    "body": [
+      "New-PodeLoggingMethod"
+    ],
+    "description": "Create a new method of outputting logs."
+  },
+  "New-PodeLoggingMethod File": {
+    "prefix": "New-PodeLoggingMethod",
+    "body": [
+      "New-PodeLoggingMethod -Name ${1:string}"
+    ],
+    "description": "Create a new method of outputting logs."
+  },
+  "New-PodeLoggingMethod EventViewer": {
+    "prefix": "New-PodeLoggingMethod",
+    "body": [
+      "New-PodeLoggingMethod"
+    ],
+    "description": "Create a new method of outputting logs."
+  },
+  "New-PodeLoggingMethod Custom": {
+    "prefix": "New-PodeLoggingMethod",
+    "body": [
+      "New-PodeLoggingMethod -ScriptBlock ${1:scriptblock}"
+    ],
+    "description": "Create a new method of outputting logs."
+  },
+  "New-PodeMutex": {
+    "prefix": "New-PodeMutex",
+    "body": [
+      "New-PodeMutex -Name ${1:string}"
+    ],
+    "description": "Create a new Mutex."
+  },
+  "New-PodeOABoolProperty": {
+    "prefix": "New-PodeOABoolProperty",
+    "body": [
+      "New-PodeOABoolProperty"
+    ],
+    "description": "Creates a new OpenAPI boolean property, for Schemas or Parameters."
+  },
+  "New-PodeOAIntProperty": {
+    "prefix": "New-PodeOAIntProperty",
+    "body": [
+      "New-PodeOAIntProperty"
+    ],
+    "description": "Creates a new OpenAPI integer property, for Schemas or Parameters."
+  },
+  "New-PodeOANumberProperty": {
+    "prefix": "New-PodeOANumberProperty",
+    "body": [
+      "New-PodeOANumberProperty"
+    ],
+    "description": "Creates a new OpenAPI number property, for Schemas or Parameters."
+  },
+  "New-PodeOAObjectProperty": {
+    "prefix": "New-PodeOAObjectProperty",
+    "body": [
+      "New-PodeOAObjectProperty -Properties ${1:hashtable[]}"
+    ],
+    "description": "Creates a new OpenAPI object property from other properties, for Schemas or Parameters."
+  },
+  "New-PodeOARequestBody Schema": {
+    "prefix": "New-PodeOARequestBody",
+    "body": [
+      "New-PodeOARequestBody -ContentSchemas ${1:hashtable}"
+    ],
+    "description": "Creates a Request Body definition for routes from the supplied content-types and schemas."
+  },
+  "New-PodeOARequestBody Reference": {
+    "prefix": "New-PodeOARequestBody",
+    "body": [
+      "New-PodeOARequestBody -Reference ${1:string}"
+    ],
+    "description": "Creates a Request Body definition for routes from the supplied content-types and schemas."
+  },
+  "New-PodeOASchemaProperty": {
+    "prefix": "New-PodeOASchemaProperty",
+    "body": [
+      "New-PodeOASchemaProperty -Reference ${1:string}"
+    ],
+    "description": "Creates a new OpenAPI schema reference from another OpenAPI schema."
+  },
+  "New-PodeOAStringProperty Inbuilt": {
+    "prefix": "New-PodeOAStringProperty",
+    "body": [
+      "New-PodeOAStringProperty"
+    ],
+    "description": "Creates a new OpenAPI string property, for Schemas or Parameters."
+  },
+  "New-PodeOAStringProperty Custom": {
+    "prefix": "New-PodeOAStringProperty",
+    "body": [
+      "New-PodeOAStringProperty"
+    ],
+    "description": "Creates a new OpenAPI string property, for Schemas or Parameters."
+  },
+  "New-PodeSemaphore": {
+    "prefix": "New-PodeSemaphore",
+    "body": [
+      "New-PodeSemaphore -Name ${1:string}"
+    ],
+    "description": "Create a new Semaphore."
+  },
+  "Out-PodeHost": {
+    "prefix": "Out-PodeHost",
+    "body": [
+      "Out-PodeHost -InputObject ${1:System.Object}"
+    ],
+    "description": "Due to Pode's use of runspaces, this will output a given object back to the main Host.\nIt's advised to use this function, so that any output respects the -Quiet flag of the server."
+  },
+  "Out-PodeVariable": {
+    "prefix": "Out-PodeVariable",
+    "body": [
+      "Out-PodeVariable -Name ${1:string}"
+    ],
+    "description": "Allows you to define a variable, with a value, that should be created on the in the main scope after the Pode server is stopped."
+  },
+  "Protect-PodeLogItem": {
+    "prefix": "Protect-PodeLogItem",
+    "body": [
+      "Protect-PodeLogItem"
+    ],
+    "description": "Masks values within a log item, or any string, to protect sensitive information.\nPatterns, and the Mask, can be configured via the server.psd1 configuration file."
+  },
+  "Protect-PodeValue": {
+    "prefix": "Protect-PodeValue",
+    "body": [
+      "Protect-PodeValue"
+    ],
+    "description": "Protects a value, by returning a default value is the main one is null/empty."
+  },
+  "Read-PodeSecret": {
+    "prefix": "Read-PodeSecret",
+    "body": [
+      "Read-PodeSecret -Key ${1:string} -Vault ${2:string}"
+    ],
+    "description": "Read a Secret from a Secret Vault."
+  },
+  "Read-PodeTcpClient default": {
+    "prefix": "Read-PodeTcpClient",
+    "body": [
+      "Read-PodeTcpClient"
+    ],
+    "description": "Reads data from a TCP socket stream."
+  },
+  "Read-PodeTcpClient CheckBytes": {
+    "prefix": "Read-PodeTcpClient",
+    "body": [
+      "Read-PodeTcpClient"
+    ],
+    "description": "Reads data from a TCP socket stream."
+  },
+  "Read-PodeTcpClient CRLF": {
+    "prefix": "Read-PodeTcpClient",
+    "body": [
+      "Read-PodeTcpClient"
+    ],
+    "description": "Reads data from a TCP socket stream."
+  },
+  "Register-PodeEvent": {
+    "prefix": "Register-PodeEvent",
+    "body": [
+      "Register-PodeEvent -Type ${1:string} -Name ${2:string} -ScriptBlock ${3:scriptblock}"
+    ],
+    "description": "Registers a script to be run when a certain server event occurs within Pode, such as Start, Terminate, and Restart."
+  },
+  "Register-PodeSecretVault SecretManagement": {
+    "prefix": "Register-PodeSecretVault",
+    "body": [
+      "Register-PodeSecretVault -Name ${1:string} -ModuleName ${2:string}"
+    ],
+    "description": "Register a Secret Vault, which is defined by either custom logic or using the SecretManagement module."
+  },
+  "Register-PodeSecretVault Custom": {
+    "prefix": "Register-PodeSecretVault",
+    "body": [
+      "Register-PodeSecretVault -Name ${1:string} -ScriptBlock ${2:scriptblock}"
+    ],
+    "description": "Register a Secret Vault, which is defined by either custom logic or using the SecretManagement module."
+  },
+  "Remove-PodeAuth": {
+    "prefix": "Remove-PodeAuth",
+    "body": [
+      "Remove-PodeAuth -Name ${1:string}"
+    ],
+    "description": "Remove a specific Authentication method."
+  },
+  "Remove-PodeCookie": {
+    "prefix": "Remove-PodeCookie",
+    "body": [
+      "Remove-PodeCookie -Name ${1:string}"
+    ],
+    "description": "Removes a cookie from the Response, this is done by immediately expiring the cookie and flagging it for discard."
+  },
+  "Remove-PodeFileWatcher": {
+    "prefix": "Remove-PodeFileWatcher",
+    "body": [
+      "Remove-PodeFileWatcher -Name ${1:string}"
+    ],
+    "description": "Removes a specific File Watchers."
+  },
+  "Remove-PodeFlashMessage": {
+    "prefix": "Remove-PodeFlashMessage",
+    "body": [
+      "Remove-PodeFlashMessage -Name ${1:string}"
+    ],
+    "description": "Removes flash messages for the supplied name currently being stored."
+  },
+  "Remove-PodeHandler": {
+    "prefix": "Remove-PodeHandler",
+    "body": [
+      "Remove-PodeHandler -Type ${1:string} -Name ${2:string}"
+    ],
+    "description": "Remove a specific Handler."
+  },
+  "Remove-PodeLockable": {
+    "prefix": "Remove-PodeLockable",
+    "body": [
+      "Remove-PodeLockable -Name ${1:string}"
+    ],
+    "description": "Removes a custom Lockable object."
+  },
+  "Remove-PodeLogger": {
+    "prefix": "Remove-PodeLogger",
+    "body": [
+      "Remove-PodeLogger -Name ${1:string}"
+    ],
+    "description": "Removes a configured Logging method."
+  },
+  "Remove-PodeMiddleware": {
+    "prefix": "Remove-PodeMiddleware",
+    "body": [
+      "Remove-PodeMiddleware -Name ${1:string}"
+    ],
+    "description": "Removes a specific user defined Middleware."
+  },
+  "Remove-PodeMutex": {
+    "prefix": "Remove-PodeMutex",
+    "body": [
+      "Remove-PodeMutex -Name ${1:string}"
+    ],
+    "description": "Remove a Mutex."
+  },
+  "Remove-PodeOAResponse": {
+    "prefix": "Remove-PodeOAResponse",
+    "body": [
+      "Remove-PodeOAResponse -Route ${1:hashtable[]} -StatusCode ${2:int}"
+    ],
+    "description": "Remove a response definition from the supplied route."
+  },
+  "Remove-PodeRoute": {
+    "prefix": "Remove-PodeRoute",
+    "body": [
+      "Remove-PodeRoute -Method ${1:string} -Path ${2:string}"
+    ],
+    "description": "Remove a specific Route."
+  },
+  "Remove-PodeSchedule": {
+    "prefix": "Remove-PodeSchedule",
+    "body": [
+      "Remove-PodeSchedule -Name ${1:string}"
+    ],
+    "description": "Removes a specific Schedule."
+  },
+  "Remove-PodeSecret": {
+    "prefix": "Remove-PodeSecret",
+    "body": [
+      "Remove-PodeSecret -Key ${1:string} -Vault ${2:string}"
+    ],
+    "description": "Remove a Secret from a Secret Vault. To remove a mounted Secret, you can pass the Remove switch to Dismount-PodeSecret."
+  },
+  "Remove-PodeSecurity": {
+    "prefix": "Remove-PodeSecurity",
+    "body": [
+      "Remove-PodeSecurity"
+    ],
+    "description": "Removes definitions for all security headers."
+  },
+  "Remove-PodeSecurityAccessControl": {
+    "prefix": "Remove-PodeSecurityAccessControl",
+    "body": [
+      "Remove-PodeSecurityAccessControl"
+    ],
+    "description": "Removes definitions for the Access-Control headers: Access-Control-Allow-Origin, Access-Control-Allow-Methods, Access-Control-Allow-Headers, Access-Control-Max-Age, Access-Control-Allow-Credentials"
+  },
+  "Remove-PodeSecurityContentSecurityPolicy": {
+    "prefix": "Remove-PodeSecurityContentSecurityPolicy",
+    "body": [
+      "Remove-PodeSecurityContentSecurityPolicy"
+    ],
+    "description": "Removes definition for the Content-Security-Policy and X-XSS-Protection headers."
+  },
+  "Remove-PodeSecurityContentTypeOptions": {
+    "prefix": "Remove-PodeSecurityContentTypeOptions",
+    "body": [
+      "Remove-PodeSecurityContentTypeOptions"
+    ],
+    "description": "Removes definitions for the X-Content-Type-Options header."
+  },
+  "Remove-PodeSecurityCrossOrigin": {
+    "prefix": "Remove-PodeSecurityCrossOrigin",
+    "body": [
+      "Remove-PodeSecurityCrossOrigin"
+    ],
+    "description": "Removes definitions for the Cross-Origin headers: Cross-Origin-Embedder-Policy, Cross-Origin-Opener-Policy, Cross-Origin-Resource-Policy"
+  },
+  "Remove-PodeSecurityFrameOptions": {
+    "prefix": "Remove-PodeSecurityFrameOptions",
+    "body": [
+      "Remove-PodeSecurityFrameOptions"
+    ],
+    "description": "Removes definition for the X-Frame-Options header."
+  },
+  "Remove-PodeSecurityHeader": {
+    "prefix": "Remove-PodeSecurityHeader",
+    "body": [
+      "Remove-PodeSecurityHeader -Name ${1:string}"
+    ],
+    "description": "Removes definition for specified security header."
+  },
+  "Remove-PodeSecurityPermissionsPolicy": {
+    "prefix": "Remove-PodeSecurityPermissionsPolicy",
+    "body": [
+      "Remove-PodeSecurityPermissionsPolicy"
+    ],
+    "description": "Removes definitions for the Permissions-Policy header."
+  },
+  "Remove-PodeSecurityReferrerPolicy": {
+    "prefix": "Remove-PodeSecurityReferrerPolicy",
+    "body": [
+      "Remove-PodeSecurityReferrerPolicy"
+    ],
+    "description": "Removes definitions for the Referrer-Policy header."
+  },
+  "Remove-PodeSecurityStrictTransportSecurity": {
+    "prefix": "Remove-PodeSecurityStrictTransportSecurity",
+    "body": [
+      "Remove-PodeSecurityStrictTransportSecurity"
+    ],
+    "description": "Removes definitions for the Strict-Transport-Security header."
+  },
+  "Remove-PodeSemaphore": {
+    "prefix": "Remove-PodeSemaphore",
+    "body": [
+      "Remove-PodeSemaphore -Name ${1:string}"
+    ],
+    "description": "Remove a Semaphore."
+  },
+  "Remove-PodeSession": {
+    "prefix": "Remove-PodeSession",
+    "body": [
+      "Remove-PodeSession"
+    ],
+    "description": "Remove the current Session, logging it out. This will remove the session from Storage, and Cookies."
+  },
+  "Remove-PodeSignalRoute": {
+    "prefix": "Remove-PodeSignalRoute",
+    "body": [
+      "Remove-PodeSignalRoute -Path ${1:string}"
+    ],
+    "description": "Remove a specific Signal Route."
+  },
+  "Remove-PodeState": {
+    "prefix": "Remove-PodeState",
+    "body": [
+      "Remove-PodeState -Name ${1:string}"
+    ],
+    "description": "Removes some state object from the shared state. After removal, the original object being stored is returned."
+  },
+  "Remove-PodeStaticRoute": {
+    "prefix": "Remove-PodeStaticRoute",
+    "body": [
+      "Remove-PodeStaticRoute -Path ${1:string}"
+    ],
+    "description": "Remove a specific static Route."
+  },
+  "Remove-PodeTask": {
+    "prefix": "Remove-PodeTask",
+    "body": [
+      "Remove-PodeTask -Name ${1:string}"
+    ],
+    "description": "Removes a specific Task."
+  },
+  "Remove-PodeTimer": {
+    "prefix": "Remove-PodeTimer",
+    "body": [
+      "Remove-PodeTimer -Name ${1:string}"
+    ],
+    "description": "Removes a specific Timer."
+  },
+  "Remove-PodeVerb": {
+    "prefix": "Remove-PodeVerb",
+    "body": [
+      "Remove-PodeVerb -Verb ${1:string}"
+    ],
+    "description": "Remove a specific Verb."
+  },
+  "Remove-PodeWebSocket": {
+    "prefix": "Remove-PodeWebSocket",
+    "body": [
+      "Remove-PodeWebSocket"
+    ],
+    "description": "Disconnects and then removes a WebSocket connection."
+  },
+  "Reset-PodeSessionExpiry": {
+    "prefix": "Reset-PodeSessionExpiry",
+    "body": [
+      "Reset-PodeSessionExpiry"
+    ],
+    "description": "Resets the current Session's expiry date, to be from the current time plus the defined Session duration."
+  },
+  "Reset-PodeWebSocket": {
+    "prefix": "Reset-PodeWebSocket",
+    "body": [
+      "Reset-PodeWebSocket"
+    ],
+    "description": "Reset an existing WebSocket connection, either using it's current URL or a new one."
+  },
+  "Resolve-PodeValue": {
+    "prefix": "Resolve-PodeValue",
+    "body": [
+      "Resolve-PodeValue -Check ${1:bool}"
+    ],
+    "description": "Resolves a query, and returns a value based on the response."
+  },
+  "Restart-PodeServer": {
+    "prefix": "Restart-PodeServer",
+    "body": [
+      "Restart-PodeServer"
+    ],
+    "description": "Restarts the Pode server."
+  },
+  "Restore-PodeState": {
+    "prefix": "Restore-PodeState",
+    "body": [
+      "Restore-PodeState -Path ${1:string}"
+    ],
+    "description": "Restores the shared state from some JSON file."
+  },
+  "Save-PodeRequestFile": {
+    "prefix": "Save-PodeRequestFile",
+    "body": [
+      "Save-PodeRequestFile -Key ${1:string}"
+    ],
+    "description": "Saves any uploaded files on the Request to the File System."
+  },
+  "Save-PodeSession": {
+    "prefix": "Save-PodeSession",
+    "body": [
+      "Save-PodeSession"
+    ],
+    "description": "Saves the current Session's data."
+  },
+  "Save-PodeState": {
+    "prefix": "Save-PodeState",
+    "body": [
+      "Save-PodeState -Path ${1:string}"
+    ],
+    "description": "Saves the current shared state to a supplied JSON file. When using this function, it's recommended to wrap it in a Lock-PodeObject block."
+  },
+  "Send-PodeSignal": {
+    "prefix": "Send-PodeSignal",
+    "body": [
+      "Send-PodeSignal"
+    ],
+    "description": "Broadcasts a message to all, or some, connected WebSocket clients. You can specify a path to send messages to, or a specific ClientId."
+  },
+  "Send-PodeWebSocket": {
+    "prefix": "Send-PodeWebSocket",
+    "body": [
+      "Send-PodeWebSocket"
+    ],
+    "description": "Send a message back to a WebSocket connection."
+  },
+  "Set-PodeCookie Duration": {
+    "prefix": "Set-PodeCookie",
+    "body": [
+      "Set-PodeCookie -Name ${1:string}"
+    ],
+    "description": "Sets a cookie on the Response using the \"Set-Cookie\" header. You can also set cookies to expire, or being signed."
+  },
+  "Set-PodeCookie ExpiryDate": {
+    "prefix": "Set-PodeCookie",
+    "body": [
+      "Set-PodeCookie -Name ${1:string}"
+    ],
+    "description": "Sets a cookie on the Response using the \"Set-Cookie\" header. You can also set cookies to expire, or being signed."
+  },
+  "Set-PodeCookieSecret General": {
+    "prefix": "Set-PodeCookieSecret",
+    "body": [
+      "Set-PodeCookieSecret -Name ${1:string} -Value ${2:string}"
+    ],
+    "description": "Stores secrets that can be used to sign cookies. A global secret can be set for easier retrieval."
+  },
+  "Set-PodeCookieSecret Global": {
+    "prefix": "Set-PodeCookieSecret",
+    "body": [
+      "Set-PodeCookieSecret -Value ${1:string}"
+    ],
+    "description": "Stores secrets that can be used to sign cookies. A global secret can be set for easier retrieval."
+  },
+  "Set-PodeHeader": {
+    "prefix": "Set-PodeHeader",
+    "body": [
+      "Set-PodeHeader -Name ${1:string} -Value ${2:string}"
+    ],
+    "description": "Sets a header on the Response, clearing all current values for the header."
+  },
+  "Set-PodeHeaderBulk": {
+    "prefix": "Set-PodeHeaderBulk",
+    "body": [
+      "Set-PodeHeaderBulk -Values ${1:hashtable}"
+    ],
+    "description": "Sets multiple headers on the Response, clearing all current values for the header."
+  },
+  "Set-PodeOARequest": {
+    "prefix": "Set-PodeOARequest",
+    "body": [
+      "Set-PodeOARequest -Route ${1:hashtable[]}"
+    ],
+    "description": "Sets the definition of a request for a route."
+  },
+  "Set-PodeOARouteInfo": {
+    "prefix": "Set-PodeOARouteInfo",
+    "body": [
+      "Set-PodeOARouteInfo -Route ${1:hashtable[]}"
+    ],
+    "description": "Sets metadate for the supplied route, such as Summary and Tags."
+  },
+  "Set-PodeResponseAttachment": {
+    "prefix": "Set-PodeResponseAttachment",
+    "body": [
+      "Set-PodeResponseAttachment -Path ${1:string}"
+    ],
+    "description": "Attaches a file from the \"/public\", and static Routes, onto the Response for downloading.\nIf the supplied path is not in the Static Routes but is a literal/relative path, then this file is used instead."
+  },
+  "Set-PodeResponseStatus": {
+    "prefix": "Set-PodeResponseStatus",
+    "body": [
+      "Set-PodeResponseStatus -Code ${1:int}"
+    ],
+    "description": "Sets the Status Code of the Response, and controls rendering error pages."
+  },
+  "Set-PodeRouteIfExistsPreference": {
+    "prefix": "Set-PodeRouteIfExistsPreference",
+    "body": [
+      "Set-PodeRouteIfExistsPreference"
+    ],
+    "description": "Set the default IfExists preference for Routes."
+  },
+  "Set-PodeScheduleConcurrency": {
+    "prefix": "Set-PodeScheduleConcurrency",
+    "body": [
+      "Set-PodeScheduleConcurrency -Maximum ${1:int}"
+    ],
+    "description": "Set the maximum number of concurrent schedules."
+  },
+  "Set-PodeSecret": {
+    "prefix": "Set-PodeSecret",
+    "body": [
+      "Set-PodeSecret -Key ${1:string} -Vault ${2:string} -InputObject ${3:System.Object}"
+    ],
+    "description": "Create/update a Secret in a Secret Vault."
+  },
+  "Set-PodeSecurity": {
+    "prefix": "Set-PodeSecurity",
+    "body": [
+      "Set-PodeSecurity -Type ${1:string}"
+    ],
+    "description": "Sets inbuilt definitions for security headers, in either Simple or Strict types."
+  },
+  "Set-PodeSecurityAccessControl": {
+    "prefix": "Set-PodeSecurityAccessControl",
+    "body": [
+      "Set-PodeSecurityAccessControl"
+    ],
+    "description": "Removes definitions for the Access-Control headers: Access-Control-Allow-Origin, Access-Control-Allow-Methods, Access-Control-Allow-Headers, Access-Control-Max-Age, Access-Control-Allow-Credentials"
+  },
+  "Set-PodeSecurityContentSecurityPolicy": {
+    "prefix": "Set-PodeSecurityContentSecurityPolicy",
+    "body": [
+      "Set-PodeSecurityContentSecurityPolicy"
+    ],
+    "description": "Set the value to use for the Content-Security-Policy and X-XSS-Protection headers."
+  },
+  "Set-PodeSecurityContentTypeOptions": {
+    "prefix": "Set-PodeSecurityContentTypeOptions",
+    "body": [
+      "Set-PodeSecurityContentTypeOptions"
+    ],
+    "description": "Set a value for the X-Content-Type-Options header to \"nosniff\"."
+  },
+  "Set-PodeSecurityCrossOrigin": {
+    "prefix": "Set-PodeSecurityCrossOrigin",
+    "body": [
+      "Set-PodeSecurityCrossOrigin"
+    ],
+    "description": "Removes definitions for the Cross-Origin headers: Cross-Origin-Embedder-Policy, Cross-Origin-Opener-Policy, Cross-Origin-Resource-Policy"
+  },
+  "Set-PodeSecurityFrameOptions": {
+    "prefix": "Set-PodeSecurityFrameOptions",
+    "body": [
+      "Set-PodeSecurityFrameOptions -Type ${1:string}"
+    ],
+    "description": "Set a value for the X-Frame-Options header."
+  },
+  "Set-PodeSecurityPermissionsPolicy": {
+    "prefix": "Set-PodeSecurityPermissionsPolicy",
+    "body": [
+      "Set-PodeSecurityPermissionsPolicy"
+    ],
+    "description": "Set the value to use for the Permissions-Policy header."
+  },
+  "Set-PodeSecurityReferrerPolicy": {
+    "prefix": "Set-PodeSecurityReferrerPolicy",
+    "body": [
+      "Set-PodeSecurityReferrerPolicy -Type ${1:string}"
+    ],
+    "description": "Set a value for the Referrer-Policy header."
+  },
+  "Set-PodeSecurityStrictTransportSecurity": {
+    "prefix": "Set-PodeSecurityStrictTransportSecurity",
+    "body": [
+      "Set-PodeSecurityStrictTransportSecurity"
+    ],
+    "description": "Set a value for the Strict-Transport-Security header."
+  },
+  "Set-PodeState": {
+    "prefix": "Set-PodeState",
+    "body": [
+      "Set-PodeState -Name ${1:string}"
+    ],
+    "description": "Sets an object within the shared state."
+  },
+  "Set-PodeTaskConcurrency": {
+    "prefix": "Set-PodeTaskConcurrency",
+    "body": [
+      "Set-PodeTaskConcurrency -Maximum ${1:int}"
+    ],
+    "description": "Set the maximum number of concurrent Tasks."
+  },
+  "Set-PodeViewEngine": {
+    "prefix": "Set-PodeViewEngine",
+    "body": [
+      "Set-PodeViewEngine"
+    ],
+    "description": "Long description"
+  },
+  "Set-PodeWebSocketConcurrency": {
+    "prefix": "Set-PodeWebSocketConcurrency",
+    "body": [
+      "Set-PodeWebSocketConcurrency -Maximum ${1:int}"
+    ],
+    "description": "Set the maximum number of concurrent WebSocket connection threads."
+  },
+  "Show-PodeGui": {
+    "prefix": "Show-PodeGui",
+    "body": [
+      "Show-PodeGui -Title ${1:string}"
+    ],
+    "description": "Opens a Web Server up as a Desktop Application."
+  },
+  "Start-PodeServer Script": {
+    "prefix": "Start-PodeServer",
+    "body": [
+      "Start-PodeServer -ScriptBlock ${1:scriptblock}"
+    ],
+    "description": "Starts a Pode Server with the supplied ScriptBlock."
+  },
+  "Start-PodeServer File": {
+    "prefix": "Start-PodeServer",
+    "body": [
+      "Start-PodeServer -FilePath ${1:string}"
+    ],
+    "description": "Starts a Pode Server with the supplied ScriptBlock."
+  },
+  "Start-PodeStaticServer": {
+    "prefix": "Start-PodeStaticServer",
+    "body": [
+      "Start-PodeStaticServer"
+    ],
+    "description": "Helper wrapper function to start a Pode web server for a static website at the current directory."
+  },
+  "Start-PodeStopwatch": {
+    "prefix": "Start-PodeStopwatch",
+    "body": [
+      "Start-PodeStopwatch -Name ${1:string} -ScriptBlock ${2:scriptblock}"
+    ],
+    "description": "Starts a Stopwatch on some ScriptBlock, and outputs the duration at the end."
+  },
+  "Test-PodeAuthUser": {
+    "prefix": "Test-PodeAuthUser",
+    "body": [
+      "Test-PodeAuthUser"
+    ],
+    "description": "Test whether the current WebEvent or Session has an authenticated user. Returns true if there is an authenticated user."
+  },
+  "Test-PodeCookie": {
+    "prefix": "Test-PodeCookie",
+    "body": [
+      "Test-PodeCookie -Name ${1:string}"
+    ],
+    "description": "Tests if a cookie exists on the Request."
+  },
+  "Test-PodeCookieSigned": {
+    "prefix": "Test-PodeCookieSigned",
+    "body": [
+      "Test-PodeCookieSigned -Name ${1:string}"
+    ],
+    "description": "Tests if a cookie on the Request is validly signed, by attempting to unsign it using some secret."
+  },
+  "Test-PodeEvent": {
+    "prefix": "Test-PodeEvent",
+    "body": [
+      "Test-PodeEvent -Type ${1:string} -Name ${2:string}"
+    ],
+    "description": "Tests if an event has been registered with the specified Name."
+  },
+  "Test-PodeFileWatcher": {
+    "prefix": "Test-PodeFileWatcher",
+    "body": [
+      "Test-PodeFileWatcher -Name ${1:string}"
+    ],
+    "description": "Tests whether the passed File Watcher exists by its name."
+  },
+  "Test-PodeFlashMessage": {
+    "prefix": "Test-PodeFlashMessage",
+    "body": [
+      "Test-PodeFlashMessage -Name ${1:string}"
+    ],
+    "description": "Tests if there are any flash messages currently being stored for a supplied name."
+  },
+  "Test-PodeHeader": {
+    "prefix": "Test-PodeHeader",
+    "body": [
+      "Test-PodeHeader -Name ${1:string}"
+    ],
+    "description": "Tests if a header is present on the Request."
+  },
+  "Test-PodeHeaderSigned": {
+    "prefix": "Test-PodeHeaderSigned",
+    "body": [
+      "Test-PodeHeaderSigned -Name ${1:string}"
+    ],
+    "description": "Tests if a header on the Request is validly signed, by attempting to unsign it using some secret."
+  },
+  "Test-PodeIsEmpty": {
+    "prefix": "Test-PodeIsEmpty",
+    "body": [
+      "Test-PodeIsEmpty"
+    ],
+    "description": "Tests if a value is empty - the value can be of any type."
+  },
+  "Test-PodeIsHeroku": {
+    "prefix": "Test-PodeIsHeroku",
+    "body": [
+      "Test-PodeIsHeroku"
+    ],
+    "description": "Returns whether or not the server is running via Heroku."
+  },
+  "Test-PodeIsHosted": {
+    "prefix": "Test-PodeIsHosted",
+    "body": [
+      "Test-PodeIsHosted"
+    ],
+    "description": "Returns whether or not the server is being hosted behind another application, such as Heroku or IIS."
+  },
+  "Test-PodeIsIIS": {
+    "prefix": "Test-PodeIsIIS",
+    "body": [
+      "Test-PodeIsIIS"
+    ],
+    "description": "Returns whether or not the server is running via IIS."
+  },
+  "Test-PodeIsMacOS": {
+    "prefix": "Test-PodeIsMacOS",
+    "body": [
+      "Test-PodeIsMacOS"
+    ],
+    "description": "Tests if the current OS is MacOS."
+  },
+  "Test-PodeIsPSCore": {
+    "prefix": "Test-PodeIsPSCore",
+    "body": [
+      "Test-PodeIsPSCore"
+    ],
+    "description": "Tests if the the current session is running in PowerShell Core."
+  },
+  "Test-PodeIsUnix": {
+    "prefix": "Test-PodeIsUnix",
+    "body": [
+      "Test-PodeIsUnix"
+    ],
+    "description": "Tests if the current OS is Unix."
+  },
+  "Test-PodeIsWindows": {
+    "prefix": "Test-PodeIsWindows",
+    "body": [
+      "Test-PodeIsWindows"
+    ],
+    "description": "Tests if the current OS is Windows."
+  },
+  "Test-PodeLockable": {
+    "prefix": "Test-PodeLockable",
+    "body": [
+      "Test-PodeLockable -Name ${1:string}"
+    ],
+    "description": "Test if a custom Lockable object exists."
+  },
+  "Test-PodeMutex": {
+    "prefix": "Test-PodeMutex",
+    "body": [
+      "Test-PodeMutex -Name ${1:string}"
+    ],
+    "description": "Test if a Mutex exists."
+  },
+  "Test-PodeRequestFile": {
+    "prefix": "Test-PodeRequestFile",
+    "body": [
+      "Test-PodeRequestFile -Key ${1:string}"
+    ],
+    "description": "Test to see if the Request contains the key for any uploaded files."
+  },
+  "Test-PodeRoute": {
+    "prefix": "Test-PodeRoute",
+    "body": [
+      "Test-PodeRoute -Method ${1:string} -Path ${2:string}"
+    ],
+    "description": "Test if a Route already exists for a given Method and Path."
+  },
+  "Test-PodeSchedule": {
+    "prefix": "Test-PodeSchedule",
+    "body": [
+      "Test-PodeSchedule -Name ${1:string}"
+    ],
+    "description": "Tests whether the passed Schedule exists by its name."
+  },
+  "Test-PodeSecret": {
+    "prefix": "Test-PodeSecret",
+    "body": [
+      "Test-PodeSecret -Name ${1:string}"
+    ],
+    "description": "Test if a Secret has been mounted."
+  },
+  "Test-PodeSecretVault": {
+    "prefix": "Test-PodeSecretVault",
+    "body": [
+      "Test-PodeSecretVault -Name ${1:string}"
+    ],
+    "description": "Tests if a Secret Vault has been registered."
+  },
+  "Test-PodeSemaphore": {
+    "prefix": "Test-PodeSemaphore",
+    "body": [
+      "Test-PodeSemaphore -Name ${1:string}"
+    ],
+    "description": "Test if a Semaphore exists."
+  },
+  "Test-PodeSignalRoute": {
+    "prefix": "Test-PodeSignalRoute",
+    "body": [
+      "Test-PodeSignalRoute -Path ${1:string}"
+    ],
+    "description": "Test if a Signal Route already exists for a given Path."
+  },
+  "Test-PodeState": {
+    "prefix": "Test-PodeState",
+    "body": [
+      "Test-PodeState -Name ${1:string}"
+    ],
+    "description": "Tests if the shared state contains some state object."
+  },
+  "Test-PodeStaticRoute": {
+    "prefix": "Test-PodeStaticRoute",
+    "body": [
+      "Test-PodeStaticRoute -Path ${1:string}"
+    ],
+    "description": "Test if a Static Route already exists for a given Path."
+  },
+  "Test-PodeTaskCompleted": {
+    "prefix": "Test-PodeTaskCompleted",
+    "body": [
+      "Test-PodeTaskCompleted -Task ${1:hashtable}"
+    ],
+    "description": "Test if a running Task has completed."
+  },
+  "Test-PodeTimer": {
+    "prefix": "Test-PodeTimer",
+    "body": [
+      "Test-PodeTimer -Name ${1:string}"
+    ],
+    "description": "Tests whether the passed Timer exists by its name."
+  },
+  "Test-PodeWebSocket": {
+    "prefix": "Test-PodeWebSocket",
+    "body": [
+      "Test-PodeWebSocket -Name ${1:string}"
+    ],
+    "description": "Test whether an WebSocket connection exists for the given Name."
+  },
+  "Unlock-PodeSecretVault": {
+    "prefix": "Unlock-PodeSecretVault",
+    "body": [
+      "Unlock-PodeSecretVault -Name ${1:string}"
+    ],
+    "description": "Unlock the Secret Vault."
+  },
+  "Unregister-PodeEvent": {
+    "prefix": "Unregister-PodeEvent",
+    "body": [
+      "Unregister-PodeEvent -Type ${1:string} -Name ${2:string}"
+    ],
+    "description": "Unregisters an event that has been registered with the specified Name."
+  },
+  "Unregister-PodeSecretVault": {
+    "prefix": "Unregister-PodeSecretVault",
+    "body": [
+      "Unregister-PodeSecretVault -Name ${1:string}"
+    ],
+    "description": "Unregister a Secret Vault. If the Vault was via the SecretManagement module it will also be unregistered there as well."
+  },
+  "Update-PodeCookieExpiry Duration": {
+    "prefix": "Update-PodeCookieExpiry",
+    "body": [
+      "Update-PodeCookieExpiry -Name ${1:string}"
+    ],
+    "description": "Updates the exipry date of a cookie on the Response. This can either be done by suppling a duration, or and explicit expiry date."
+  },
+  "Update-PodeCookieExpiry ExpiryDate": {
+    "prefix": "Update-PodeCookieExpiry",
+    "body": [
+      "Update-PodeCookieExpiry -Name ${1:string}"
+    ],
+    "description": "Updates the exipry date of a cookie on the Response. This can either be done by suppling a duration, or and explicit expiry date."
+  },
+  "Update-PodeSecret": {
+    "prefix": "Update-PodeSecret",
+    "body": [
+      "Update-PodeSecret -Name ${1:string} -InputObject ${2:System.Object}"
+    ],
+    "description": "Update the value of a mounted Secret in a Secret Vault. You can also use \"$secret:<NAME> = $value\" syntax in certain places."
+  },
+  "Use-PodeAuth": {
+    "prefix": "Use-PodeAuth",
+    "body": [
+      "Use-PodeAuth"
+    ],
+    "description": "Automatically loads auth ps1 files from either a /auth folder, or a custom folder. Saves space dot-sourcing them all one-by-one."
+  },
+  "Use-PodeEndware": {
+    "prefix": "Use-PodeEndware",
+    "body": [
+      "Use-PodeEndware"
+    ],
+    "description": "Automatically loads endware ps1 files from either a /endware folder, or a custom folder. Saves space dot-sourcing them all one-by-one."
+  },
+  "Use-PodeEvents": {
+    "prefix": "Use-PodeEvents",
+    "body": [
+      "Use-PodeEvents"
+    ],
+    "description": "Automatically loads event ps1 files from either a /events folder, or a custom folder. Saves space dot-sourcing them all one-by-one."
+  },
+  "Use-PodeFileWatchers": {
+    "prefix": "Use-PodeFileWatchers",
+    "body": [
+      "Use-PodeFileWatchers"
+    ],
+    "description": "Automatically loads File Watchers ps1 files from either a /filewatcher folder, or a custom folder. Saves space dot-sourcing them all one-by-one."
+  },
+  "Use-PodeHandlers": {
+    "prefix": "Use-PodeHandlers",
+    "body": [
+      "Use-PodeHandlers"
+    ],
+    "description": "Automatically loads handler ps1 files from either a /handler folder, or a custom folder. Saves space dot-sourcing them all one-by-one."
+  },
+  "Use-PodeLogging": {
+    "prefix": "Use-PodeLogging",
+    "body": [
+      "Use-PodeLogging"
+    ],
+    "description": "Automatically loads logging ps1 files from either a /logging folder, or a custom folder. Saves space dot-sourcing them all one-by-one."
+  },
+  "Use-PodeMiddleware": {
+    "prefix": "Use-PodeMiddleware",
+    "body": [
+      "Use-PodeMiddleware"
+    ],
+    "description": "Automatically loads middleware ps1 files from either a /middleware folder, or a custom folder. Saves space dot-sourcing them all one-by-one."
+  },
+  "Use-PodeMutex": {
+    "prefix": "Use-PodeMutex",
+    "body": [
+      "Use-PodeMutex -Name ${1:string} -ScriptBlock ${2:scriptblock}"
+    ],
+    "description": "Places a temporary hold on a Mutex, invokes a ScriptBlock, then releases the Mutex."
+  },
+  "Use-PodePartialView": {
+    "prefix": "Use-PodePartialView",
+    "body": [
+      "Use-PodePartialView -Path ${1:string}"
+    ],
+    "description": "Includes the contents of a partial View into another dynamic View. The partial View can be static or dynamic."
+  },
+  "Use-PodeRoutes": {
+    "prefix": "Use-PodeRoutes",
+    "body": [
+      "Use-PodeRoutes"
+    ],
+    "description": "Automatically loads route ps1 files from either a /routes folder, or a custom folder. Saves space dot-sourcing them all one-by-one."
+  },
+  "Use-PodeSchedules": {
+    "prefix": "Use-PodeSchedules",
+    "body": [
+      "Use-PodeSchedules"
+    ],
+    "description": "Automatically loads schedule ps1 files from either a /schedules folder, or a custom folder. Saves space dot-sourcing them all one-by-one."
+  },
+  "Use-PodeScript": {
+    "prefix": "Use-PodeScript",
+    "body": [
+      "Use-PodeScript -Path ${1:string}"
+    ],
+    "description": "Loads a script, by dot-sourcing, at the supplied path. If the path is relative, the server's path is prepended."
+  },
+  "Use-PodeSemaphore": {
+    "prefix": "Use-PodeSemaphore",
+    "body": [
+      "Use-PodeSemaphore -Name ${1:string} -ScriptBlock ${2:scriptblock}"
+    ],
+    "description": "Places a temporary hold on a Semaphore, invokes a ScriptBlock, then releases the Semaphore."
+  },
+  "Use-PodeStream": {
+    "prefix": "Use-PodeStream",
+    "body": [
+      "Use-PodeStream -Stream ${1:System.IDisposable} -ScriptBlock ${2:scriptblock}"
+    ],
+    "description": "Like the \"using\" keyword in .NET. Allows you to use a Stream and then disposes of it."
+  },
+  "Use-PodeTasks": {
+    "prefix": "Use-PodeTasks",
+    "body": [
+      "Use-PodeTasks"
+    ],
+    "description": "Automatically loads task ps1 files from either a /tasks folder, or a custom folder. Saves space dot-sourcing them all one-by-one."
+  },
+  "Use-PodeTimers": {
+    "prefix": "Use-PodeTimers",
+    "body": [
+      "Use-PodeTimers"
+    ],
+    "description": "Automatically loads timer ps1 files from either a /timers folder, or a custom folder. Saves space dot-sourcing them all one-by-one."
+  },
+  "Use-PodeVerbs": {
+    "prefix": "Use-PodeVerbs",
+    "body": [
+      "Use-PodeVerbs"
+    ],
+    "description": "Automatically loads verb ps1 files from either a /verbs folder, or a custom folder. Saves space dot-sourcing them all one-by-one."
+  },
+  "Wait-PodeTask": {
+    "prefix": "Wait-PodeTask",
+    "body": [
+      "Wait-PodeTask -Task ${1:System.Object}"
+    ],
+    "description": "Waits for a task to finish, and returns a result if there is one."
+  },
+  "Write-PodeCsvResponse Value": {
+    "prefix": "Write-PodeCsvResponse",
+    "body": [
+      "Write-PodeCsvResponse -Value ${1:System.Object}"
+    ],
+    "description": "Writes CSV data to the Response, setting the content type accordingly."
+  },
+  "Write-PodeCsvResponse File": {
+    "prefix": "Write-PodeCsvResponse",
+    "body": [
+      "Write-PodeCsvResponse -Path ${1:string}"
+    ],
+    "description": "Writes CSV data to the Response, setting the content type accordingly."
+  },
+  "Write-PodeErrorLog Exception": {
+    "prefix": "Write-PodeErrorLog",
+    "body": [
+      "Write-PodeErrorLog -Exception ${1:System.Exception}"
+    ],
+    "description": "Writes and Exception or ErrorRecord using the inbuilt error logging."
+  },
+  "Write-PodeErrorLog Error": {
+    "prefix": "Write-PodeErrorLog",
+    "body": [
+      "Write-PodeErrorLog -ErrorRecord ${1:System.Management.Automation.ErrorRecord}"
+    ],
+    "description": "Writes and Exception or ErrorRecord using the inbuilt error logging."
+  },
+  "Write-PodeFileResponse": {
+    "prefix": "Write-PodeFileResponse",
+    "body": [
+      "Write-PodeFileResponse -Path ${1:string}"
+    ],
+    "description": "Renders the content of a static, or dynamic, file on the Response.\nYou can set browser's to cache the content, and also override the file's content type."
+  },
+  "Write-PodeHost": {
+    "prefix": "Write-PodeHost",
+    "body": [
+      "Write-PodeHost"
+    ],
+    "description": "Writes an object to the Host.\nIt's advised to use this function, so that any output respects the -Quiet flag of the server."
+  },
+  "Write-PodeHtmlResponse Value": {
+    "prefix": "Write-PodeHtmlResponse",
+    "body": [
+      "Write-PodeHtmlResponse -Value ${1:System.Object}"
+    ],
+    "description": "Writes HTML data to the Response, setting the content type accordingly."
+  },
+  "Write-PodeHtmlResponse File": {
+    "prefix": "Write-PodeHtmlResponse",
+    "body": [
+      "Write-PodeHtmlResponse -Path ${1:string}"
+    ],
+    "description": "Writes HTML data to the Response, setting the content type accordingly."
+  },
+  "Write-PodeJsonResponse Value": {
+    "prefix": "Write-PodeJsonResponse",
+    "body": [
+      "Write-PodeJsonResponse -Value ${1:System.Object}"
+    ],
+    "description": "Writes JSON data to the Response, setting the content type accordingly."
+  },
+  "Write-PodeJsonResponse File": {
+    "prefix": "Write-PodeJsonResponse",
+    "body": [
+      "Write-PodeJsonResponse -Path ${1:string}"
+    ],
+    "description": "Writes JSON data to the Response, setting the content type accordingly."
+  },
+  "Write-PodeLog": {
+    "prefix": "Write-PodeLog",
+    "body": [
+      "Write-PodeLog -Name ${1:string} -InputObject ${2:System.Object}"
+    ],
+    "description": "Write an object to a configured custom Logging method."
+  },
+  "Write-PodeMarkdownResponse Value": {
+    "prefix": "Write-PodeMarkdownResponse",
+    "body": [
+      "Write-PodeMarkdownResponse -Value ${1:System.Object}"
+    ],
+    "description": "Writes Markdown data to the Response, with the option to render it as HTML."
+  },
+  "Write-PodeMarkdownResponse File": {
+    "prefix": "Write-PodeMarkdownResponse",
+    "body": [
+      "Write-PodeMarkdownResponse -Path ${1:string}"
+    ],
+    "description": "Writes Markdown data to the Response, with the option to render it as HTML."
+  },
+  "Write-PodeTcpClient": {
+    "prefix": "Write-PodeTcpClient",
+    "body": [
+      "Write-PodeTcpClient"
+    ],
+    "description": "Writes data to a TCP socket stream."
+  },
+  "Write-PodeTextResponse String": {
+    "prefix": "Write-PodeTextResponse",
+    "body": [
+      "Write-PodeTextResponse"
+    ],
+    "description": "Writes a String or a Byte[] to the Response, as some specified content type. This value can also be cached."
+  },
+  "Write-PodeTextResponse Bytes": {
+    "prefix": "Write-PodeTextResponse",
+    "body": [
+      "Write-PodeTextResponse"
+    ],
+    "description": "Writes a String or a Byte[] to the Response, as some specified content type. This value can also be cached."
+  },
+  "Write-PodeViewResponse": {
+    "prefix": "Write-PodeViewResponse",
+    "body": [
+      "Write-PodeViewResponse -Path ${1:string}"
+    ],
+    "description": "Renders a dynamic, or static, View on the Response; allowing for dynamic data to be supplied."
+  },
+  "Write-PodeXmlResponse Value": {
+    "prefix": "Write-PodeXmlResponse",
+    "body": [
+      "Write-PodeXmlResponse -Value ${1:System.Object}"
+    ],
+    "description": "Writes XML data to the Response, setting the content type accordingly."
+  },
+  "Write-PodeXmlResponse File": {
+    "prefix": "Write-PodeXmlResponse",
+    "body": [
+      "Write-PodeXmlResponse -Path ${1:string}"
+    ],
+    "description": "Writes XML data to the Response, setting the content type accordingly."
+  }
+}

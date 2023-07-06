@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+
+  vscode:
+    build:
+      context: PowerShellBuildKit
+      args:       
+        AlpineContainerTag: 3.18
+        PowerShellVersion: 7.3.4
+        apkPackageJSON: "[ 'nodejs', 'npm' ]"
+        InvokeExpressionJSON: "[ 'npm install -g @vscode/vsce' ]"
+        InstallModuleJSON: "{ 'ModuleName': 'Pode', 'RequiredVersion': '2.8.0' }"
+    stdin_open: true
+    tty: true 
+    volumes:
+      - ..:/workspace:cached
+    command: ["/bin/sh"]

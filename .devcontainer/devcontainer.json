@@ -1,0 +1,37 @@
+{
+
+    "name": "PowerShellBuildKit Pode VS Code Extension",
+
+    // Compose
+    "dockerComposeFile": "docker-compose.yml",
+    "shutdownAction": "stopCompose",
+
+    // vscode service
+    "service": "vscode",
+    "workspaceFolder": "/workspace",
+
+    // Product specific properties
+    // https://containers.dev/supporting
+    "customizations": {
+
+        "vscode": {
+
+            // customizations.vscode.extensions - type: array - An array of extension IDs that specify the extensions that should be installed inside the container when it is created
+            "extensions": [ 
+                "ms-azuretools.vscode-docker",
+                "ms-vscode.powershell"
+            ],
+
+            // customizations.vscode.settings - type: object - Adds default settings.json values into a container/machine specific settings file.
+            "settings": {
+
+                // terminal.integrated.defaultProfile.linux - type: string - The default profile used on Linux. This setting will currently be ignored if either terminal.integrated.shell.linux or terminal.integrated.shellArgs.linux are set.
+                "terminal.integrated.defaultProfile.linux": "pwsh"
+
+            }
+           
+        }
+
+    }
+
+}
